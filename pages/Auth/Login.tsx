@@ -44,7 +44,7 @@ const Login: React.FC = () => {
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center mb-4">
             <img
-              src="/logos/Logo Vertical Color.svg"
+              src={`${import.meta.env.BASE_URL}logos/Logo Vertical Color.svg`}
               alt="Blockchain Wire"
               className="h-28"
             />

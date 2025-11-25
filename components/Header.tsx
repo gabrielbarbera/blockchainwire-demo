@@ -12,7 +12,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <img 
-              src="/logos/Logo Horizontal Color.svg" 
+              src={`${import.meta.env.BASE_URL}logos/Logo Horizontal Color.svg`}
               alt="Blockchain Wire" 
               className="h-7 sm:h-8"
             />
