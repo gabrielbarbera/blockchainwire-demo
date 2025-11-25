@@ -80,7 +80,7 @@ const DistributionStep: React.FC<Props> = ({ selectedCircuit, onSelect, onNext }
               </button>
               
               {isOpen && (
-                <div className="px-3 sm:px-4 py-3 pt-3 sm:pt-0 border-t border-secondary-light">
+                <div className="px-3 sm:px-4 py-3 border-t border-secondary-light">
                   <div className="grid grid-cols-1 gap-3 sm:gap-4">
                     {circuits.map((circuit) => {
                 const isSelected = selectedCircuit === circuit.id;
