@@ -42,20 +42,13 @@ const Login: React.FC = () => {
       <div className="w-full max-w-md">
         {/* Logo/Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-lg mb-4 shadow-lg">
-            <svg
-              width="32"
-              height="32"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              className="text-white"
-            >
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-            </svg>
+          <div className="inline-flex items-center justify-center mb-4">
+            <img
+              src="/logos/Logo Vertical Color.svg"
+              alt="Blockchain Wire"
+              className="h-28"
+            />
           </div>
-          <h1 className="text-3xl font-bold text-secondary-black mb-2">Blockchain Wire</h1>
           <p className="text-secondary-medium">Sign in to your account</p>
         </div>
 
