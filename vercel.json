@@ -4,11 +4,23 @@
   "rewrites": [
     {
       "source": "/blockchainwire",
-      "destination": "/blockchainwire/index.html"
+      "destination": "/index.html"
     },
     {
       "source": "/blockchainwire/",
-      "destination": "/blockchainwire/index.html"
+      "destination": "/index.html"
+    },
+    {
+      "source": "/blockchainwire/assets/(.*)",
+      "destination": "/assets/$1"
+    },
+    {
+      "source": "/blockchainwire/logos/(.*)",
+      "destination": "/logos/$1"
+    },
+    {
+      "source": "/blockchainwire/cards/(.*)",
+      "destination": "/cards/$1"
     }
   ],
   "headers": [
@@ -135,6 +147,58 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(.*\\.css)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/css; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(.*\\.js)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/javascript; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/logos/(.*\\.svg)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "image/svg+xml"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/logos/(.*\\.png)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "image/png"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
         }
       ]
     }
