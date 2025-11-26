@@ -42,20 +42,17 @@ export const AccountProvider: React.FC<{ children: ReactNode }> = ({ children })
 
   const switchAccount = (accountId: string) => {
     setCurrentAccountId(accountId);
-    // In a real app, you'd persist this to localStorage/API
     localStorage.setItem('currentAccountId', accountId);
   };
 
   const addAccount = (account: Account) => {
     setAccounts(prev => [...prev, account]);
-    // If it's a primary account and there's no current account, set it as current
     if (account.isPrimary && !currentAccount) {
       setCurrentAccountId(account.id);
       localStorage.setItem('currentAccountId', account.id);
     }
   };
 
-  // Load current account from localStorage on mount
   React.useEffect(() => {
     const savedAccountId = localStorage.getItem('currentAccountId');
     if (savedAccountId && accounts.find(acc => acc.id === savedAccountId)) {

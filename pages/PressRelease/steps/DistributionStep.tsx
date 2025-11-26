@@ -61,7 +61,6 @@ const DistributionStep: React.FC<Props> = ({ selectedCircuit, onSelect, onNext }
     const isDark = colorMode === 'dark';
     const isCS = theme === 'cs';
     
-    // Theme-based color coding
     if (category === 'International') {
       return isCS
         ? isDark ? 'bg-wire-bg-light text-wire-text' : 'bg-wire-bg text-wire-text'
@@ -73,7 +72,6 @@ const DistributionStep: React.FC<Props> = ({ selectedCircuit, onSelect, onNext }
         : isDark ? 'bg-gray-600 text-white' : 'bg-secondary-medium text-white';
     }
     
-    // Wire & Specialty tiers
     switch (id) {
       case 'basic-seo':
         return isCS
@@ -92,7 +90,6 @@ const DistributionStep: React.FC<Props> = ({ selectedCircuit, onSelect, onNext }
           ? isDark ? 'bg-wire-accent text-black' : 'bg-wire-accent text-black'
           : isDark ? 'bg-primary-dark text-white' : 'bg-primary text-white';
       
-      // Metals
       case 'copper': return 'bg-[#B87333]/20 text-secondary-black dark:text-gray-200';
       case 'silver':
         return isCS

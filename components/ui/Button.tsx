@@ -38,7 +38,6 @@ export const Button: React.FC<ButtonProps> = ({
       };
     }
     
-    // Default theme
     return {
       primary: colorMode === 'dark'
         ? 'bg-primary-dark hover:bg-primary text-white focus:ring-primary-dark'

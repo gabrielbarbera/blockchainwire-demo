@@ -16,7 +16,6 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [theme, setThemeState] = useState<ThemeName>(() => {
     const saved = localStorage.getItem('theme');
-    // Migrate old theme names to new ones
     if (saved === 'default') return 'bw';
     if (saved === 'wire') return 'cs';
     return (saved === 'bw' || saved === 'cs' ? saved : 'bw') as ThemeName;
@@ -41,7 +40,6 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     }
   }, [colorMode]);
 
-  // Initialize on mount
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     if (colorMode === 'dark') {

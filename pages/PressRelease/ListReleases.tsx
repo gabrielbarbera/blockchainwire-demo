@@ -16,7 +16,6 @@ const ListReleases: React.FC = () => {
   const [selectedCircuit, setSelectedCircuit] = useState<string>('all');
   const [selectedAuthor, setSelectedAuthor] = useState<string>('all');
 
-  // Get unique authors and circuit names for filters
   const uniqueAuthors = useMemo(() => {
     const authors = Array.from(new Set(MOCK_RELEASES.map(r => r.author)));
     return authors.sort();
@@ -27,20 +26,16 @@ const ListReleases: React.FC = () => {
     return circuits.sort();
   }, []);
 
-  // Filter releases based on selected filters
   const filteredReleases = useMemo(() => {
     return MOCK_RELEASES.filter(release => {
-      // Filter by status
       if (selectedStatus !== 'all' && release.status !== selectedStatus) {
         return false;
       }
 
-      // Filter by circuit
       if (selectedCircuit !== 'all' && release.circuitName !== selectedCircuit) {
         return false;
       }
 
-      // Filter by author
       if (selectedAuthor !== 'all' && release.author !== selectedAuthor) {
         return false;
       }
@@ -71,7 +66,6 @@ const ListReleases: React.FC = () => {
   const handleEdit = (release: Release) => {
     const circuitId = getCircuitIdFromName(release.circuitName);
     
-    // Parse date if available
     let scheduleDate = '';
     let scheduleTime = '';
     let scheduleTimezone = 'US/Eastern';
@@ -87,7 +81,6 @@ const ListReleases: React.FC = () => {
           }
         }
       } catch (e) {
-        // If parsing fails, leave empty
       }
     }
 

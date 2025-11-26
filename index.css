@@ -6,9 +6,7 @@ body {
   font-family: 'IBM Plex Sans', sans-serif;
 }
 
-/* Theme-aware CSS variables */
 :root {
-  /* Default theme - Light mode */
   --color-bg-primary: #F9FAFB;
   --color-bg-secondary: #F3F4F6;
   --color-bg-tertiary: #F3F4F6;
@@ -22,7 +20,6 @@ body {
 }
 
 [data-theme="cs"] {
-  /* Wire theme - Light mode */
   --color-bg-primary: #F1F5F9;
   --color-bg-secondary: #1E293B;
   --color-bg-tertiary: #E5E7EB;
@@ -36,7 +33,6 @@ body {
 }
 
 [data-theme="cs"].dark {
-  /* Wire theme - Dark mode */
   --color-bg-primary: #0F172A;
   --color-bg-secondary: #1E293B;
   --color-bg-tertiary: #2D3748;
@@ -50,7 +46,6 @@ body {
 }
 
 .dark {
-  /* Default theme - Dark mode */
   --color-bg-primary: #111827;
   --color-bg-secondary: #1F2937;
   --color-bg-tertiary: #374151;
@@ -63,7 +58,6 @@ body {
   --color-accent-light: #1A8FA0;
 }
 
-/* Custom scrollbar for cleaner UI - Theme-aware */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -73,7 +67,6 @@ body {
   background: transparent;
 }
 
-/* Default theme (BW) - Light mode */
 ::-webkit-scrollbar-thumb {
   background: #9B9B9B;
   border-radius: 3px;
@@ -83,7 +76,6 @@ body {
   background: #353535;
 }
 
-/* Default theme (BW) - Dark mode */
 .dark ::-webkit-scrollbar-thumb {
   background: #6B7280;
 }
@@ -92,7 +84,6 @@ body {
   background: #9CA3AF;
 }
 
-/* CS theme - Light mode */
 [data-theme="cs"] ::-webkit-scrollbar-thumb {
   background: #9CA3AF;
 }
@@ -101,7 +92,6 @@ body {
   background: #6B7280;
 }
 
-/* CS theme - Dark mode */
 [data-theme="cs"].dark ::-webkit-scrollbar-thumb {
   background: #4B5563;
 }
@@ -137,14 +127,9 @@ body {
   margin: 0.25em 0;
 }
 
-/* Tiptap Editor Links - Theme-aware */
 .tiptap-editor a {
   text-decoration: underline;
   cursor: pointer;
-}
-
-/* Default theme (BW) - Light mode */
-.tiptap-editor a {
   color: #35BACF;
 }
 
@@ -152,7 +137,6 @@ body {
   color: #2EA5B8;
 }
 
-/* Default theme (BW) - Dark mode */
 .dark .tiptap-editor a {
   color: #1A8FA0;
 }
@@ -161,7 +145,6 @@ body {
   color: #35BACF;
 }
 
-/* CS theme - Light mode */
 [data-theme="cs"] .tiptap-editor a {
   color: #32CD32;
 }
@@ -170,7 +153,6 @@ body {
   color: #28C028;
 }
 
-/* CS theme - Dark mode */
 [data-theme="cs"].dark .tiptap-editor a {
   color: #32CD32;
 }
@@ -197,7 +179,6 @@ body {
   text-decoration: underline;
 }
 
-/* Hide scrollbar but keep functionality */
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -207,7 +188,6 @@ body {
   display: none;
 }
 
-/* Touch optimization */
 .touch-manipulation {
   touch-action: manipulation;
 }

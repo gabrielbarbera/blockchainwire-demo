@@ -59,12 +59,10 @@ const AddAccount: React.FC = () => {
   };
 
   const handleContinue = () => {
-    // Always redirect to registration flow
     navigate('/register');
   };
 
   const handleSave = () => {
-    // Validate required fields
     if (!formData.accountName || !formData.city || !formData.country || 
         !formData.address || !formData.contactEmail || !formData.primaryPhone || 
         !formData.industry || !formData.website) {

@@ -24,7 +24,6 @@ const ScheduleStep: React.FC<Props> = ({ data, onChange, onNext, onBack }) => {
     return new Date(new Date().getFullYear(), new Date().getMonth(), 1);
   });
 
-  // Parse selected date avoiding timezone issues
   const selectedDate = data.schedule.date ? (() => {
     const [year, month, day] = data.schedule.date.split('-').map(Number);
     return new Date(year, month - 1, day);
@@ -62,7 +61,6 @@ const ScheduleStep: React.FC<Props> = ({ data, onChange, onNext, onBack }) => {
   const handleDateSelect = (day: number) => {
     const year = currentMonth.getFullYear();
     const month = currentMonth.getMonth();
-    // Create date string directly to avoid timezone issues
     const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
     
     onChange({
@@ -83,7 +81,6 @@ const ScheduleStep: React.FC<Props> = ({ data, onChange, onNext, onBack }) => {
 
   const isSelected = (day: number | null) => {
     if (!day || !data.schedule.date) return false;
-    // Parse the date string directly to avoid timezone issues
     const [year, month, date] = data.schedule.date.split('-').map(Number);
     const currentYear = currentMonth.getFullYear();
     const currentMonthIndex = currentMonth.getMonth();

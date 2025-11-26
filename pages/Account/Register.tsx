@@ -170,12 +170,10 @@ const Register: React.FC = () => {
       const stepBarRect = stepBar.getBoundingClientRect();
       const activeButtonRect = activeButton.getBoundingClientRect();
 
-      // Check if active button is out of view
       const isOutOfViewLeft = activeButtonRect.left < stepBarRect.left;
       const isOutOfViewRight = activeButtonRect.right > stepBarRect.right;
 
       if (isOutOfViewLeft || isOutOfViewRight) {
-        // Scroll to show the active step
         const scrollLeft =
           activeButton.offsetLeft -
           stepBar.offsetLeft -
@@ -190,7 +188,6 @@ const Register: React.FC = () => {
   }, [currentStep]);
 
   const handleSubmit = () => {
-    // Create primary account from registration data
     const newAccount = {
       id: Date.now().toString(),
       name: `${formData.primaryContact.firstName} ${formData.primaryContact.lastName}`,
@@ -200,13 +197,6 @@ const Register: React.FC = () => {
     };
 
     addAccount(newAccount);
-
-    // In a real app, you would:
-    // 1. Submit formData to API
-    // 2. Handle authentication/login
-    // 3. Redirect to dashboard
-
-    // For now, show success and redirect
     alert(
       "Registration submitted successfully! Your account is pending verification."
     );

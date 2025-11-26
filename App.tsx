@@ -23,21 +23,11 @@ import AccountSettings from "./pages/Settings/AccountSettings";
 import AddUser from "./pages/Users/AddUser";
 import MyUsers from "./pages/Users/MyUsers";
 
-const Placeholder = ({ title }: { title: string }) => (
-  <div className="p-10 text-center">
-    <h1 className="text-2xl font-bold text-secondary-medium">{title}</h1>
-    <p className="text-secondary-medium mt-2">
-      This page is under construction.
-    </p>
-  </div>
-);
-
 const AppContent: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   const { theme, colorMode } = useTheme();
 
-  // Update favicon based on theme
   useEffect(() => {
     const faviconLink = document.querySelector(
       "link[rel~='icon']"
@@ -67,7 +57,6 @@ const AppContent: React.FC = () => {
     }
   }, [theme]);
 
-  // Hide sidebar on public pages (login/registration for unregistered users)
   const isPublicPage =
     location.pathname === "/login" ||
     location.pathname === "/register" ||
@@ -120,11 +109,9 @@ const AppContent: React.FC = () => {
           }`}
         >
           <Routes>
-            {/* Public Routes */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
 
-            {/* Protected Routes */}
             <Route
               path="/"
               element={

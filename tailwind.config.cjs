@@ -10,7 +10,6 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Default theme (Cyan/Teal)
         primary: {
           DEFAULT: '#35BACF',
           hover: '#2EA5B8',
@@ -24,27 +23,26 @@ module.exports = {
           light: '#E5E6E6',
           white: '#FFFFFF',
         },
-        // Wire theme (Lime Green accent - adjusted for better contrast)
         wire: {
           accent: {
-            DEFAULT: '#32CD32', // LimeGreen - better contrast than #39FF14
+            DEFAULT: '#32CD32',
             hover: '#28C028',
-            light: '#90EE90', // LightGreen
-            dark: '#228B22', // ForestGreen
-            bright: '#39FF14', // Original bright for highlights
+            light: '#90EE90',
+            dark: '#228B22',
+            bright: '#39FF14',
           },
           bg: {
-            DEFAULT: '#1E293B', // Slate-800
-            light: '#2D3748', // Slate-700
-            lighter: '#374151', // Gray-700
-            dark: '#0F172A', // Slate-900
-            'light-mode': '#F1F5F9', // Slate-100 for light mode (softer than Slate-50)
+            DEFAULT: '#1E293B',
+            light: '#2D3748',
+            lighter: '#374151',
+            dark: '#0F172A',
+            'light-mode': '#F1F5F9',
           },
           text: {
             DEFAULT: '#FFFFFF',
-            secondary: '#E5E7EB', // Gray-200
-            muted: '#9CA3AF', // Gray-400
-            dark: '#111827', // Gray-900 for light mode (darker for better contrast)
+            secondary: '#E5E7EB',
+            muted: '#9CA3AF',
+            dark: '#111827',
           },
         },
       },
