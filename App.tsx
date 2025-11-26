@@ -41,14 +41,18 @@ const AppContent: React.FC = () => {
         faviconLink.href = `${import.meta.env.BASE_URL}logos/CSFavicon.svg`;
       }
       if (alternateFaviconLink) {
-        alternateFaviconLink.href = `${import.meta.env.BASE_URL}logos/CSFavicon.png`;
+        alternateFaviconLink.href = `${
+          import.meta.env.BASE_URL
+        }logos/CSFavicon.png`;
       }
     } else {
       if (faviconLink) {
         faviconLink.href = `${import.meta.env.BASE_URL}logos/Favicon2.svg`;
       }
       if (alternateFaviconLink) {
-        alternateFaviconLink.href = `${import.meta.env.BASE_URL}logos/Favicon2.png`;
+        alternateFaviconLink.href = `${
+          import.meta.env.BASE_URL
+        }logos/Favicon2.png`;
       }
     }
   }, [theme]);
