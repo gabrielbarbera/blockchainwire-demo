@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTheme } from '../../contexts/ThemeContext';
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: 'default' | 'compact' | 'elevated' | 'outlined';
@@ -13,7 +14,18 @@ export const Card: React.FC<CardProps> = ({
   children,
   ...props 
 }) => {
-  const baseStyles = 'bg-white rounded-lg border border-secondary-light';
+  const { theme, colorMode } = useTheme();
+  
+  const getBaseStyles = () => {
+    if (theme === 'cs') {
+      return colorMode === 'dark'
+        ? 'bg-wire-bg rounded-lg border border-wire-bg-light'
+        : 'bg-wire-bg-light-mode rounded-lg border border-gray-300';
+    }
+    return colorMode === 'dark'
+      ? 'bg-gray-800 rounded-lg border border-gray-700'
+      : 'bg-gray-50 rounded-lg border border-gray-300';
+  };
   
   const variants = {
     default: 'shadow-sm p-6',
@@ -28,7 +40,7 @@ export const Card: React.FC<CardProps> = ({
 
   return (
     <div 
-      className={`${baseStyles} ${variants[variant]} ${hoverStyles} ${className}`}
+      className={`${getBaseStyles()} ${variants[variant]} ${hoverStyles} ${className}`}
       {...props}
     >
       {children}
@@ -83,9 +95,19 @@ export const CardFooter: React.FC<CardFooterProps> = ({
   children,
   ...props 
 }) => {
+  const { theme, colorMode } = useTheme();
+  
+  const borderClass = theme === 'cs'
+    ? colorMode === 'dark'
+      ? 'border-wire-bg-light'
+      : 'border-gray-300'
+    : colorMode === 'dark'
+      ? 'border-gray-700'
+      : 'border-gray-300';
+  
   return (
     <div 
-      className={`mt-4 pt-4 border-t border-secondary-light ${className}`}
+      className={`mt-4 pt-4 border-t ${borderClass} ${className}`}
       {...props}
     >
       {children}

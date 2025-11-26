@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { Button } from '../../../../components/ui/Button';
+import { Card } from '../../../../components/ui/Card';
+import { useThemeClasses } from '../../../../hooks/useThemeClasses';
+import { useTheme } from '../../../../contexts/ThemeContext';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
 interface TermsData {
@@ -15,6 +18,8 @@ interface Props {
 }
 
 const TermsStep: React.FC<Props> = ({ data, onChange, onSubmit, onBack }) => {
+  const classes = useThemeClasses();
+  const { theme } = useTheme();
   const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({
     limitations: false,
     warranties: false,
@@ -41,11 +46,11 @@ const TermsStep: React.FC<Props> = ({ data, onChange, onSubmit, onBack }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-secondary-light p-6 sm:p-8">
-      <h2 className="text-xl sm:text-2xl font-bold text-secondary-black mb-6">Terms & Conditions</h2>
+    <Card variant="default" className="p-6 sm:p-8">
+      <h2 className={`text-xl sm:text-2xl font-bold mb-6 ${classes.text.black}`}>Terms & Conditions</h2>
       
       <div className="mb-6">
-        <p className="text-sm text-secondary-dark mb-6">
+        <p className={`text-sm mb-6 ${classes.text.primary}`}>
           By using the Blockchainwire.io website ("Site"), users agree to be bound by the following terms of use.
         </p>
 
@@ -53,17 +58,17 @@ const TermsStep: React.FC<Props> = ({ data, onChange, onSubmit, onBack }) => {
         <div className="mb-4">
           <button
             onClick={() => toggleSection('limitations')}
-            className="w-full flex items-center justify-between p-4 bg-secondary-light/30 rounded-lg hover:bg-secondary-light/50 transition-colors"
+            className={`w-full flex items-center justify-between p-4 rounded-lg transition-colors ${classes.bg.tertiary} hover:${classes.bg.secondary}`}
           >
-            <span className="font-bold text-secondary-black">A. Limitations on Scope of Use</span>
+            <span className={`font-bold ${classes.text.black}`}>A. Limitations on Scope of Use</span>
             {expandedSections.limitations ? (
-              <ChevronUp size={20} className="text-secondary-medium" />
+              <ChevronUp size={20} className={classes.text.secondary} />
             ) : (
-              <ChevronDown size={20} className="text-secondary-medium" />
+              <ChevronDown size={20} className={classes.text.secondary} />
             )}
           </button>
           {expandedSections.limitations && (
-            <div className="mt-2 p-4 bg-white border border-secondary-light rounded-lg text-sm text-secondary-dark space-y-3">
+            <Card variant="compact" className="mt-2 p-4 text-sm space-y-3">
               <p>
                 Use of the Blockchain Wire Site is limited to submission of news releases for distribution 
                 via Blockchain Wire, retrieving RSS feeds, direct email and the reading of releases, 
@@ -90,7 +95,7 @@ const TermsStep: React.FC<Props> = ({ data, onChange, onSubmit, onBack }) => {
                 dissemination by Blockchain Wire, you agree to be bound by the terms and conditions set 
                 forth herein.
               </p>
-            </div>
+            </Card>
           )}
         </div>
 
@@ -98,17 +103,17 @@ const TermsStep: React.FC<Props> = ({ data, onChange, onSubmit, onBack }) => {
         <div className="mb-4">
           <button
             onClick={() => toggleSection('warranties')}
-            className="w-full flex items-center justify-between p-4 bg-secondary-light/30 rounded-lg hover:bg-secondary-light/50 transition-colors"
+            className={`w-full flex items-center justify-between p-4 rounded-lg transition-colors ${classes.bg.tertiary} hover:${classes.bg.secondary}`}
           >
-            <span className="font-bold text-secondary-black">B. Disclaimer of Warranties</span>
+            <span className={`font-bold ${classes.text.black}`}>B. Disclaimer of Warranties</span>
             {expandedSections.warranties ? (
-              <ChevronUp size={20} className="text-secondary-medium" />
+              <ChevronUp size={20} className={classes.text.secondary} />
             ) : (
-              <ChevronDown size={20} className="text-secondary-medium" />
+              <ChevronDown size={20} className={classes.text.secondary} />
             )}
           </button>
           {expandedSections.warranties && (
-            <div className="mt-2 p-4 bg-white border border-secondary-light rounded-lg text-sm text-secondary-dark">
+            <Card variant="compact" className="mt-2 p-4 text-sm">
               <p>
                 You agree that use of the Site is entirely at your own risk. EXCEPT AS SPECIFICALLY PROVIDED 
                 IN THIS AGREEMENT, THE SITE AND THE MATERIALS ON THE SITE ARE PROVIDED AS IS, WITHOUT WARRANTIES 
@@ -120,7 +125,7 @@ const TermsStep: React.FC<Props> = ({ data, onChange, onSubmit, onBack }) => {
                 jurisdictions do not allow the exclusion of certain warranties, so some or all of the above 
                 exclusions may not apply to you.
               </p>
-            </div>
+            </Card>
           )}
         </div>
 
@@ -128,17 +133,17 @@ const TermsStep: React.FC<Props> = ({ data, onChange, onSubmit, onBack }) => {
         <div className="mb-4">
           <button
             onClick={() => toggleSection('liability')}
-            className="w-full flex items-center justify-between p-4 bg-secondary-light/30 rounded-lg hover:bg-secondary-light/50 transition-colors"
+            className={`w-full flex items-center justify-between p-4 rounded-lg transition-colors ${classes.bg.tertiary} hover:${classes.bg.secondary}`}
           >
-            <span className="font-bold text-secondary-black">C. Limitation of Liability</span>
+            <span className={`font-bold ${classes.text.black}`}>C. Limitation of Liability</span>
             {expandedSections.liability ? (
-              <ChevronUp size={20} className="text-secondary-medium" />
+              <ChevronUp size={20} className={classes.text.secondary} />
             ) : (
-              <ChevronDown size={20} className="text-secondary-medium" />
+              <ChevronDown size={20} className={classes.text.secondary} />
             )}
           </button>
           {expandedSections.liability && (
-            <div className="mt-2 p-4 bg-white border border-secondary-light rounded-lg text-sm text-secondary-dark">
+            <Card variant="compact" className="mt-2 p-4 text-sm">
               <p>
                 You agree that Blockchain Wire will not be held liable for any improper or incorrect use of 
                 the Site or the materials on the Site and assumes no responsibility for any user's activities 
@@ -155,7 +160,7 @@ const TermsStep: React.FC<Props> = ({ data, onChange, onSubmit, onBack }) => {
                 exclusion of liability for incidental or consequential damages, so some or all of the above 
                 exclusions or limitations may not apply to you.
               </p>
-            </div>
+            </Card>
           )}
         </div>
 
@@ -163,17 +168,17 @@ const TermsStep: React.FC<Props> = ({ data, onChange, onSubmit, onBack }) => {
         <div className="mb-4">
           <button
             onClick={() => toggleSection('thirdParty')}
-            className="w-full flex items-center justify-between p-4 bg-secondary-light/30 rounded-lg hover:bg-secondary-light/50 transition-colors"
+            className={`w-full flex items-center justify-between p-4 rounded-lg transition-colors ${classes.bg.tertiary} hover:${classes.bg.secondary}`}
           >
-            <span className="font-bold text-secondary-black">D. Disclaimer of Liability for Third-Party Content and Links</span>
+            <span className={`font-bold ${classes.text.black}`}>D. Disclaimer of Liability for Third-Party Content and Links</span>
             {expandedSections.thirdParty ? (
-              <ChevronUp size={20} className="text-secondary-medium" />
+              <ChevronUp size={20} className={classes.text.secondary} />
             ) : (
-              <ChevronDown size={20} className="text-secondary-medium" />
+              <ChevronDown size={20} className={classes.text.secondary} />
             )}
           </button>
           {expandedSections.thirdParty && (
-            <div className="mt-2 p-4 bg-white border border-secondary-light rounded-lg text-sm text-secondary-dark">
+            <Card variant="compact" className="mt-2 p-4 text-sm">
               <p>
                 You agree that Blockchain Wire is not responsible and will not be held liable for any third-party 
                 content on the Site or any third-party content, products or services available on other Web sites 
@@ -181,7 +186,7 @@ const TermsStep: React.FC<Props> = ({ data, onChange, onSubmit, onBack }) => {
                 and their inclusion on the Blockchain Wire Site does not imply any endorsement, guarantee, warranty 
                 or representation by Blockchain Wire.
               </p>
-            </div>
+            </Card>
           )}
         </div>
 
@@ -189,17 +194,17 @@ const TermsStep: React.FC<Props> = ({ data, onChange, onSubmit, onBack }) => {
         <div className="mb-4">
           <button
             onClick={() => toggleSection('proprietary')}
-            className="w-full flex items-center justify-between p-4 bg-secondary-light/30 rounded-lg hover:bg-secondary-light/50 transition-colors"
+            className={`w-full flex items-center justify-between p-4 rounded-lg transition-colors ${classes.bg.tertiary} hover:${classes.bg.secondary}`}
           >
-            <span className="font-bold text-secondary-black">E. Proprietary Rights</span>
+            <span className={`font-bold ${classes.text.black}`}>E. Proprietary Rights</span>
             {expandedSections.proprietary ? (
-              <ChevronUp size={20} className="text-secondary-medium" />
+              <ChevronUp size={20} className={classes.text.secondary} />
             ) : (
-              <ChevronDown size={20} className="text-secondary-medium" />
+              <ChevronDown size={20} className={classes.text.secondary} />
             )}
           </button>
           {expandedSections.proprietary && (
-            <div className="mt-2 p-4 bg-white border border-secondary-light rounded-lg text-sm text-secondary-dark">
+            <Card variant="compact" className="mt-2 p-4 text-sm">
               <p>
                 The Blockchain Wire Site and all materials on the Site, including, without limitation, 
                 "Blockchain Wire" and all other trademarks and logos on the Site, are protected by copyrights, 
@@ -207,7 +212,7 @@ const TermsStep: React.FC<Props> = ({ data, onChange, onSubmit, onBack }) => {
                 permitted in this Agreement, or by express written consent of Blockchain Wire, you may not use 
                 the Site or the material on the Site in any manner.
               </p>
-            </div>
+            </Card>
           )}
         </div>
 
@@ -215,63 +220,63 @@ const TermsStep: React.FC<Props> = ({ data, onChange, onSubmit, onBack }) => {
         <div className="mb-4">
           <button
             onClick={() => toggleSection('governing')}
-            className="w-full flex items-center justify-between p-4 bg-secondary-light/30 rounded-lg hover:bg-secondary-light/50 transition-colors"
+            className={`w-full flex items-center justify-between p-4 rounded-lg transition-colors ${classes.bg.tertiary} hover:${classes.bg.secondary}`}
           >
-            <span className="font-bold text-secondary-black">F. Governing Law and Venue</span>
+            <span className={`font-bold ${classes.text.black}`}>F. Governing Law and Venue</span>
             {expandedSections.governing ? (
-              <ChevronUp size={20} className="text-secondary-medium" />
+              <ChevronUp size={20} className={classes.text.secondary} />
             ) : (
-              <ChevronDown size={20} className="text-secondary-medium" />
+              <ChevronDown size={20} className={classes.text.secondary} />
             )}
           </button>
           {expandedSections.governing && (
-            <div className="mt-2 p-4 bg-white border border-secondary-light rounded-lg text-sm text-secondary-dark">
+            <Card variant="compact" className="mt-2 p-4 text-sm">
               <p>
                 These Terms of Use shall be governed by and construed in accordance with the laws of the United 
                 States. Any dispute arising under or related in any way to these Terms & Conditions shall be 
                 adjudicated in a court of competent jurisdiction in the state of Wyoming.
               </p>
-            </div>
+            </Card>
           )}
         </div>
       </div>
 
       {/* reCAPTCHA */}
-      <div className="mb-6 p-4 bg-secondary-light/30 rounded-lg">
+      <Card variant="compact" className={`mb-6 p-4 ${classes.bg.tertiary}`}>
         <div className="flex items-center gap-2 mb-2">
           <input
             type="checkbox"
             id="recaptcha"
             checked={data.recaptchaCompleted}
             onChange={(e) => handleRecaptchaChange(e.target.checked)}
-            className="w-4 h-4 text-primary border-secondary-light rounded focus:ring-primary"
+            className={`w-4 h-4 rounded ${theme === 'cs' ? 'text-wire-accent border-wire-accent focus:ring-wire-accent' : 'text-primary border-secondary-light focus:ring-primary'}`}
           />
-          <label htmlFor="recaptcha" className="text-sm font-medium text-secondary-dark">
+          <label htmlFor="recaptcha" className={`text-sm font-medium ${classes.text.primary}`}>
             I'm not a robot
           </label>
         </div>
-        <p className="text-xs text-secondary-medium pl-6">
+        <p className={`text-xs pl-6 ${classes.text.secondary}`}>
           This is a simplified reCAPTCHA implementation. In production, integrate with Google reCAPTCHA API.
         </p>
-      </div>
+      </Card>
 
       {/* Terms Agreement */}
-      <div className="mb-6 p-4 bg-secondary-light/30 rounded-lg">
+      <Card variant="compact" className={`mb-6 p-4 ${classes.bg.tertiary}`}>
         <div className="flex items-start gap-2">
           <input
             type="checkbox"
             id="termsAgreed"
             checked={data.termsAgreed}
             onChange={(e) => handleTermsAgreed(e.target.checked)}
-            className="w-4 h-4 text-primary border-secondary-light rounded focus:ring-primary mt-1"
+            className={`w-4 h-4 rounded mt-1 ${theme === 'cs' ? 'text-wire-accent border-wire-accent focus:ring-wire-accent' : 'text-primary border-secondary-light focus:ring-primary'}`}
           />
-          <label htmlFor="termsAgreed" className="text-sm font-medium text-secondary-dark">
+          <label htmlFor="termsAgreed" className={`text-sm font-medium ${classes.text.primary}`}>
             I agree to the Terms & Conditions outlined above.
           </label>
         </div>
-      </div>
+      </Card>
 
-      <div className="flex justify-between mt-8 pt-6 border-t border-secondary-light">
+      <div className={`flex justify-between mt-8 pt-6 border-t ${classes.border.default}`}>
         <Button variant="outline" onClick={onBack} size="lg">
           Previous
         </Button>
@@ -284,7 +289,7 @@ const TermsStep: React.FC<Props> = ({ data, onChange, onSubmit, onBack }) => {
           Submit
         </Button>
       </div>
-    </div>
+    </Card>
   );
 };
 

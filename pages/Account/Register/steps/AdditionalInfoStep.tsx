@@ -1,5 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { Button } from '../../../../components/ui/Button';
+import { Card } from '../../../../components/ui/Card';
+import { useThemeClasses } from '../../../../hooks/useThemeClasses';
+import { useTheme } from '../../../../contexts/ThemeContext';
 import { Upload, X } from 'lucide-react';
 
 interface AdditionalInfoData {
@@ -22,6 +25,8 @@ interface Props {
 }
 
 const AdditionalInfoStep: React.FC<Props> = ({ data, onChange, onNext, onBack }) => {
+  const classes = useThemeClasses();
+  const { theme } = useTheme();
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const logoInputRef = useRef<HTMLInputElement>(null);
@@ -90,52 +95,52 @@ const AdditionalInfoStep: React.FC<Props> = ({ data, onChange, onNext, onBack })
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-secondary-light p-6 sm:p-8">
-      <h2 className="text-xl sm:text-2xl font-bold text-secondary-black mb-6">Additional Company Information</h2>
+    <Card variant="default" className="p-6 sm:p-8">
+      <h2 className={`text-xl sm:text-2xl font-bold mb-6 ${classes.text.black}`}>Additional Company Information</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Left Column */}
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-secondary-dark mb-1">
-              Website<span className="text-primary">*</span>
+            <label className={`block text-sm font-medium mb-1 ${classes.text.primary}`}>
+              Website<span className={theme === 'cs' ? 'text-wire-accent' : 'text-primary'}>*</span>
             </label>
             <input
               type="url"
               value={data.website}
               onChange={(e) => handleChange('website', e.target.value)}
-              className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors"
+              className={`w-full border rounded p-2 sm:p-2.5 text-sm sm:text-base focus:outline-none transition-colors ${classes.bg.tertiary} ${classes.border.default} ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'}`}
               placeholder="https://example.com"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-secondary-dark mb-1">
-              Business/Industry<span className="text-primary">*</span>
+            <label className={`block text-sm font-medium mb-1 ${classes.text.primary}`}>
+              Business/Industry<span className={theme === 'cs' ? 'text-wire-accent' : 'text-primary'}>*</span>
             </label>
             <input
               type="text"
               value={data.businessIndustry}
               onChange={(e) => handleChange('businessIndustry', e.target.value)}
-              className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors"
+              className={`w-full border rounded p-2 sm:p-2.5 text-sm sm:text-base focus:outline-none transition-colors ${classes.bg.tertiary} ${classes.border.default} ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'}`}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-secondary-dark mb-1">
-              Company Type<span className="text-primary">*</span>
+            <label className={`block text-sm font-medium mb-1 ${classes.text.primary}`}>
+              Company Type<span className={theme === 'cs' ? 'text-wire-accent' : 'text-primary'}>*</span>
             </label>
             <div className="relative">
               <select
                 value={data.companyType}
                 onChange={(e) => handleChange('companyType', e.target.value as 'Public' | 'Private')}
-                className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors appearance-none pr-8"
+                className={`w-full border rounded p-2 sm:p-2.5 text-sm sm:text-base focus:outline-none transition-colors appearance-none pr-8 ${classes.bg.tertiary} ${classes.border.default} ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'}`}
               >
                 <option value="Private">Private</option>
                 <option value="Public">Public</option>
               </select>
               <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                <svg className="w-4 h-4 text-secondary-medium" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className={`w-4 h-4 ${classes.text.secondary}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </div>
@@ -143,14 +148,14 @@ const AdditionalInfoStep: React.FC<Props> = ({ data, onChange, onNext, onBack })
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-secondary-dark mb-1">
-              Structure<span className="text-primary">*</span>
+            <label className={`block text-sm font-medium mb-1 ${classes.text.primary}`}>
+              Structure<span className={theme === 'cs' ? 'text-wire-accent' : 'text-primary'}>*</span>
             </label>
             <div className="relative">
               <select
                 value={data.structure}
                 onChange={(e) => handleChange('structure', e.target.value)}
-                className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors appearance-none pr-8"
+                className={`w-full border rounded p-2 sm:p-2.5 text-sm sm:text-base focus:outline-none transition-colors appearance-none pr-8 ${classes.bg.tertiary} ${classes.border.default} ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'}`}
               >
                 <option value="">Select Structure</option>
                 <option value="LLC">LLC</option>
@@ -160,7 +165,7 @@ const AdditionalInfoStep: React.FC<Props> = ({ data, onChange, onNext, onBack })
                 <option value="Sole Proprietorship">Sole Proprietorship</option>
               </select>
               <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                <svg className="w-4 h-4 text-secondary-medium" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className={`w-4 h-4 ${classes.text.secondary}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </div>
@@ -171,50 +176,50 @@ const AdditionalInfoStep: React.FC<Props> = ({ data, onChange, onNext, onBack })
           {isPublicCompany && (
             <>
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
-                  International Securities Identification Number (ISIN)<span className="text-primary">*</span>
+                <label className={`block text-sm font-medium mb-1 ${classes.text.primary}`}>
+                  International Securities Identification Number (ISIN)<span className={theme === 'cs' ? 'text-wire-accent' : 'text-primary'}>*</span>
                 </label>
                 <input
                   type="text"
                   value={data.isin}
                   onChange={(e) => handleChange('isin', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                  className={`w-full border rounded p-2 sm:p-2.5 text-sm sm:text-base focus:outline-none transition-colors ${classes.bg.tertiary} ${classes.border.default} ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'}`}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
-                  Stock Exchange<span className="text-primary">*</span>
+                <label className={`block text-sm font-medium mb-1 ${classes.text.primary}`}>
+                  Stock Exchange<span className={theme === 'cs' ? 'text-wire-accent' : 'text-primary'}>*</span>
                 </label>
                 <input
                   type="text"
                   value={data.stockExchange}
                   onChange={(e) => handleChange('stockExchange', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                  className={`w-full border rounded p-2 sm:p-2.5 text-sm sm:text-base focus:outline-none transition-colors ${classes.bg.tertiary} ${classes.border.default} ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'}`}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
-                  Market<span className="text-primary">*</span>
+                <label className={`block text-sm font-medium mb-1 ${classes.text.primary}`}>
+                  Market<span className={theme === 'cs' ? 'text-wire-accent' : 'text-primary'}>*</span>
                 </label>
                 <input
                   type="text"
                   value={data.market}
                   onChange={(e) => handleChange('market', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                  className={`w-full border rounded p-2 sm:p-2.5 text-sm sm:text-base focus:outline-none transition-colors ${classes.bg.tertiary} ${classes.border.default} ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'}`}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
-                  Stock Symbol<span className="text-primary">*</span>
+                <label className={`block text-sm font-medium mb-1 ${classes.text.primary}`}>
+                  Stock Symbol<span className={theme === 'cs' ? 'text-wire-accent' : 'text-primary'}>*</span>
                 </label>
                 <input
                   type="text"
                   value={data.stockSymbol}
                   onChange={(e) => handleChange('stockSymbol', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                  className={`w-full border rounded p-2 sm:p-2.5 text-sm sm:text-base focus:outline-none transition-colors ${classes.bg.tertiary} ${classes.border.default} ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'}`}
                 />
               </div>
             </>
@@ -223,11 +228,11 @@ const AdditionalInfoStep: React.FC<Props> = ({ data, onChange, onNext, onBack })
 
         {/* Right Column - Logo Upload */}
         <div>
-          <label className="block text-sm font-medium text-secondary-dark mb-2">
-            Company Logo<span className="text-primary">*</span>
+          <label className={`block text-sm font-medium mb-2 ${classes.text.primary}`}>
+            Company Logo<span className={theme === 'cs' ? 'text-wire-accent' : 'text-primary'}>*</span>
           </label>
           {logoPreview || data.logo ? (
-            <div className="border-2 border-dashed border-secondary-light rounded-lg p-6 bg-secondary-light/10">
+            <Card variant="compact" className="border-2 border-dashed p-6">
               <div className="relative">
                 <img
                   src={logoPreview || (data.logo ? URL.createObjectURL(data.logo) : '')}
@@ -242,19 +247,21 @@ const AdditionalInfoStep: React.FC<Props> = ({ data, onChange, onNext, onBack })
                   <X size={16} />
                 </button>
               </div>
-            </div>
+            </Card>
           ) : (
             <div
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
               onClick={() => logoInputRef.current?.click()}
-              className={`bg-secondary-light/30 border-2 border-dashed rounded-lg p-10 flex flex-col items-center justify-center text-secondary-medium transition-colors cursor-pointer ${
-                isDragging ? 'border-primary bg-primary-light/10' : 'border-secondary-light hover:bg-secondary-light/50'
-              }`}
+              className={`border-2 border-dashed rounded-lg p-10 flex flex-col items-center justify-center transition-colors cursor-pointer ${classes.bg.tertiary} ${
+                isDragging 
+                  ? theme === 'cs' ? 'border-cs-accent bg-cs-accent/10' : 'border-primary bg-primary-light/10'
+                  : classes.border.default
+              } hover:${classes.bg.secondary}`}
             >
-              <Upload size={32} className={`mb-2 ${isDragging ? 'text-primary' : 'opacity-50'}`} />
-              <p className="text-sm">Click to upload or drag and drop</p>
+              <Upload size={32} className={`mb-2 ${isDragging ? (theme === 'cs' ? 'text-wire-accent' : 'text-primary') : 'opacity-50'}`} />
+              <p className={`text-sm ${classes.text.secondary}`}>Click to upload or drag and drop</p>
               <input
                 ref={logoInputRef}
                 type="file"
@@ -264,13 +271,13 @@ const AdditionalInfoStep: React.FC<Props> = ({ data, onChange, onNext, onBack })
               />
             </div>
           )}
-          <p className="text-xs text-secondary-medium mt-2">
+          <p className={`text-xs mt-2 ${classes.text.secondary}`}>
             We accept jpeg, jpg and png files, with a maximum allowed size of 256KB
           </p>
         </div>
       </div>
 
-      <div className="flex justify-between mt-8 pt-6 border-t border-secondary-light">
+      <div className={`flex justify-between mt-8 pt-6 border-t ${classes.border.default}`}>
         <Button variant="outline" onClick={onBack} size="lg">
           Previous
         </Button>
@@ -282,7 +289,7 @@ const AdditionalInfoStep: React.FC<Props> = ({ data, onChange, onNext, onBack })
           Next
         </Button>
       </div>
-    </div>
+    </Card>
   );
 };
 

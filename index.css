@@ -6,7 +6,64 @@ body {
   font-family: 'IBM Plex Sans', sans-serif;
 }
 
-/* Custom scrollbar for cleaner UI */
+/* Theme-aware CSS variables */
+:root {
+  /* Default theme - Light mode */
+  --color-bg-primary: #F9FAFB;
+  --color-bg-secondary: #F3F4F6;
+  --color-bg-tertiary: #F3F4F6;
+  --color-text-primary: #111827;
+  --color-text-secondary: #374151;
+  --color-text-tertiary: #6B7280;
+  --color-border: #D1D5DB;
+  --color-accent: #35BACF;
+  --color-accent-hover: #2EA5B8;
+  --color-accent-light: #E0F6F9;
+}
+
+[data-theme="cs"] {
+  /* Wire theme - Light mode */
+  --color-bg-primary: #F1F5F9;
+  --color-bg-secondary: #1E293B;
+  --color-bg-tertiary: #E5E7EB;
+  --color-text-primary: #111827;
+  --color-text-secondary: #374151;
+  --color-text-tertiary: #6B7280;
+  --color-border: #D1D5DB;
+  --color-accent: #32CD32;
+  --color-accent-hover: #28C028;
+  --color-accent-light: #90EE90;
+}
+
+[data-theme="cs"].dark {
+  /* Wire theme - Dark mode */
+  --color-bg-primary: #0F172A;
+  --color-bg-secondary: #1E293B;
+  --color-bg-tertiary: #2D3748;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #E5E7EB;
+  --color-text-tertiary: #9CA3AF;
+  --color-border: #374151;
+  --color-accent: #32CD32;
+  --color-accent-hover: #28C028;
+  --color-accent-light: #90EE90;
+}
+
+.dark {
+  /* Default theme - Dark mode */
+  --color-bg-primary: #111827;
+  --color-bg-secondary: #1F2937;
+  --color-bg-tertiary: #374151;
+  --color-text-primary: #F9FAFB;
+  --color-text-secondary: #E5E7EB;
+  --color-text-tertiary: #9CA3AF;
+  --color-border: #374151;
+  --color-accent: #1A8FA0;
+  --color-accent-hover: #35BACF;
+  --color-accent-light: #1A8FA0;
+}
+
+/* Custom scrollbar for cleaner UI - Theme-aware */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -16,6 +73,7 @@ body {
   background: transparent;
 }
 
+/* Default theme (BW) - Light mode */
 ::-webkit-scrollbar-thumb {
   background: #9B9B9B;
   border-radius: 3px;
@@ -23,6 +81,33 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #353535;
+}
+
+/* Default theme (BW) - Dark mode */
+.dark ::-webkit-scrollbar-thumb {
+  background: #6B7280;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #9CA3AF;
+}
+
+/* CS theme - Light mode */
+[data-theme="cs"] ::-webkit-scrollbar-thumb {
+  background: #9CA3AF;
+}
+
+[data-theme="cs"] ::-webkit-scrollbar-thumb:hover {
+  background: #6B7280;
+}
+
+/* CS theme - Dark mode */
+[data-theme="cs"].dark ::-webkit-scrollbar-thumb {
+  background: #4B5563;
+}
+
+[data-theme="cs"].dark ::-webkit-scrollbar-thumb:hover {
+  background: #6B7280;
 }
 
 /* Tiptap Editor Styles */
@@ -52,14 +137,46 @@ body {
   margin: 0.25em 0;
 }
 
+/* Tiptap Editor Links - Theme-aware */
 .tiptap-editor a {
-  color: #35BACF;
   text-decoration: underline;
   cursor: pointer;
 }
 
+/* Default theme (BW) - Light mode */
+.tiptap-editor a {
+  color: #35BACF;
+}
+
 .tiptap-editor a:hover {
   color: #2EA5B8;
+}
+
+/* Default theme (BW) - Dark mode */
+.dark .tiptap-editor a {
+  color: #1A8FA0;
+}
+
+.dark .tiptap-editor a:hover {
+  color: #35BACF;
+}
+
+/* CS theme - Light mode */
+[data-theme="cs"] .tiptap-editor a {
+  color: #32CD32;
+}
+
+[data-theme="cs"] .tiptap-editor a:hover {
+  color: #28C028;
+}
+
+/* CS theme - Dark mode */
+[data-theme="cs"].dark .tiptap-editor a {
+  color: #32CD32;
+}
+
+[data-theme="cs"].dark .tiptap-editor a:hover {
+  color: #39FF14;
 }
 
 .tiptap-editor img {

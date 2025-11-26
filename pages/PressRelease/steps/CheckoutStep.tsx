@@ -3,6 +3,9 @@ import { ReleaseFormData } from '../../../types';
 import { CIRCUITS } from '../../../constants';
 import { MOCK_PROMOS } from '../../../constants';
 import { Button } from '../../../components/ui/Button';
+import { Card } from '../../../components/ui/Card';
+import { useThemeClasses } from '../../../hooks/useThemeClasses';
+import { useTheme } from '../../../contexts/ThemeContext';
 import { VisaLogo, MastercardLogo, AmexLogo } from '../../../components/ui/PaymentLogos';
 
 interface Props {
@@ -13,6 +16,8 @@ interface Props {
 const CheckoutStep: React.FC<Props> = ({ data, onBack }) => {
   const circuit = CIRCUITS.find(c => c.id === data.circuitId);
   const basePrice = circuit?.price || 0;
+  const classes = useThemeClasses();
+  const { theme, colorMode } = useTheme();
   
   const [paymentData, setPaymentData] = useState({
     cardNumber: '',
@@ -91,27 +96,27 @@ const CheckoutStep: React.FC<Props> = ({ data, onBack }) => {
   const total = basePrice - promoDiscount;
 
   return (
-    <div className="space-y-8 animate-fade-in bg-white p-8 rounded-lg shadow-sm border border-secondary-light">
-      <h2 className="text-xl font-semibold text-secondary-black">6. Checkout</h2>
+    <Card variant="default" className="space-y-8 animate-fade-in p-8">
+      <h2 className={`text-lg sm:text-xl font-semibold ${classes.text.black}`}>6. Checkout</h2>
 
-      <div className="bg-secondary-light/30 p-6 rounded border border-secondary-medium/30">
-        <h3 className="font-bold text-lg mb-4 text-secondary-dark">Purchase Summary</h3>
-        <div className="flex justify-between items-center mb-2 text-secondary-dark">
+      <Card variant="compact" className={`p-6 ${classes.bg.tertiary}`}>
+        <h3 className={`font-bold text-lg mb-4 ${classes.text.primary}`}>Purchase Summary</h3>
+        <div className={`flex justify-between items-center mb-2 ${classes.text.primary}`}>
            <span>Press Release: {circuit?.name}</span>
            <span>x1</span>
         </div>
-        <div className="flex justify-between items-center font-bold text-xl border-t border-secondary-medium/30 pt-2 mt-2 text-secondary-black">
+        <div className={`flex justify-between items-center font-bold text-xl border-t pt-2 mt-2 ${classes.border.default} ${classes.text.black}`}>
            <span>Total</span>
            <span>${total.toFixed(2)}</span>
         </div>
-      </div>
+      </Card>
 
       <div className="space-y-4">
-        <label className="block text-sm font-medium text-secondary-dark">Use Promo Code</label>
+        <label className={`block text-sm font-medium ${classes.text.primary}`}>Use Promo Code</label>
         <select
           value={selectedPromoCode}
           onChange={(e) => handlePromoCodeChange(e.target.value)}
-          className="w-full border border-secondary-medium/50 p-2 rounded bg-white text-secondary-black focus:outline-none focus:border-primary"
+          className={`w-full border px-2 py-1.5 rounded focus:outline-none transition-all ${classes.border.default} ${classes.bg.card} ${classes.text.black} ${theme === 'cs' ? 'focus:border-cs-accent' : 'focus:border-primary'}`}
         >
           <option value="">Select Promo Code</option>
           {MOCK_PROMOS.map((promo) => (
@@ -120,64 +125,64 @@ const CheckoutStep: React.FC<Props> = ({ data, onBack }) => {
             </option>
           ))}
         </select>
-        <div className="flex justify-between text-sm text-secondary-dark">
+        <div className={`flex justify-between text-sm ${classes.text.primary}`}>
           <span>Promo Discount:</span>
           <span>${promoDiscount.toFixed(2)}</span>
         </div>
-        <div className="flex justify-between font-bold text-lg text-secondary-black">
+        <div className={`flex justify-between font-bold text-lg ${classes.text.black}`}>
           <span>Total:</span>
           <span>${total.toFixed(2)}</span>
         </div>
       </div>
 
-      <div className="border-t border-secondary-light pt-6 space-y-4">
-        <h3 className="font-bold text-secondary-black">Card Info</h3>
+      <div className={`border-t pt-6 space-y-4 ${classes.border.default}`}>
+        <h3 className={`font-bold ${classes.text.black}`}>Card Info</h3>
         <div className="space-y-4">
           <div>
-            <label className="block text-xs text-secondary-medium">Card Number*</label>
+            <label className={`block text-xs ${classes.text.secondary}`}>Card Number*</label>
             <div className="flex gap-2">
               <input
                 type="text"
                 value={paymentData.cardNumber}
                 onChange={handleCardNumberChange}
                 maxLength={19}
-                className="flex-1 border border-secondary-medium/50 p-2 rounded bg-white text-secondary-black placeholder-secondary-medium focus:outline-none focus:border-primary"
+                className={`flex-1 border p-2 rounded focus:outline-none transition-all ${classes.border.default} ${classes.bg.card} ${classes.text.black} ${theme === 'cs' ? 'focus:border-cs-accent' : 'focus:border-primary'}`}
                 placeholder="XXXX XXXX XXXX XXXX"
               />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-               <label className="block text-xs text-secondary-medium">Expiration*</label>
+               <label className={`block text-xs ${classes.text.secondary}`}>Expiration*</label>
                <input
                  type="text"
                  value={paymentData.expiration}
                  onChange={handleExpirationChange}
                  maxLength={5}
-                 className="w-full border border-secondary-medium/50 p-2 rounded bg-white text-secondary-black placeholder-secondary-medium focus:outline-none focus:border-primary"
+                 className={`w-full border p-2 rounded focus:outline-none transition-all ${classes.border.default} ${classes.bg.card} ${classes.text.black} ${theme === 'cs' ? 'focus:border-cs-accent' : 'focus:border-primary'}`}
                  placeholder="MM/YY"
                />
             </div>
             <div>
-               <label className="block text-xs text-secondary-medium">CVC*</label>
+               <label className={`block text-xs ${classes.text.secondary}`}>CVC*</label>
                <input
                  type="text"
                  value={paymentData.cvc}
                  onChange={handleCvcChange}
                  maxLength={4}
-                 className="w-full border border-secondary-medium/50 p-2 rounded bg-white text-secondary-black placeholder-secondary-medium focus:outline-none focus:border-primary"
+                 className={`w-full border p-2 rounded focus:outline-none transition-all ${classes.border.default} ${classes.bg.card} ${classes.text.black} ${theme === 'cs' ? 'focus:border-cs-accent' : 'focus:border-primary'}`}
                  placeholder="123"
                />
             </div>
           </div>
           <div>
-             <label className="block text-xs text-secondary-medium">Zip Code*</label>
+             <label className={`block text-xs ${classes.text.secondary}`}>Zip Code*</label>
              <input
                type="text"
                value={paymentData.zipCode}
                onChange={handleZipCodeChange}
                maxLength={5}
-               className="w-1/3 border border-secondary-medium/50 p-2 rounded bg-white text-secondary-black placeholder-secondary-medium focus:outline-none focus:border-primary"
+               className={`w-1/3 border p-2 rounded focus:outline-none transition-all ${classes.border.default} ${classes.bg.card} ${classes.text.black} ${theme === 'cs' ? 'focus:border-cs-accent' : 'focus:border-primary'}`}
                placeholder="12345"
              />
           </div>
@@ -210,19 +215,19 @@ const CheckoutStep: React.FC<Props> = ({ data, onBack }) => {
       {/* Crypto Payment Modal */}
       {showCryptoModal && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 sm:p-6">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full animate-fade-in">
+          <Card variant="default" className="shadow-xl max-w-md w-full animate-fade-in">
             <div className="p-6 sm:p-8 text-center">
               {/* Info Icon */}
-              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-primary-light rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-primary rounded-full flex items-center justify-center">
+              <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 ${classes.icon.container}`}>
+                <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center ${theme === 'cs' ? 'bg-cs-accent' : colorMode === 'dark' ? 'bg-primary-dark' : 'bg-primary'}`}>
                   <span className="text-white text-2xl sm:text-3xl font-normal leading-none">i</span>
                 </div>
               </div>
               
               {/* Modal Text */}
               <div className="mb-6 sm:mb-8">
-                <p className="text-sm sm:text-base text-secondary-black font-medium">
-                  Continue to <span className="text-primary">NOWPayments</span>
+                <p className={`text-sm sm:text-base font-medium ${classes.text.black}`}>
+                  Continue to <span className={theme === 'cs' ? 'text-cs-accent' : 'text-primary'}>NOWPayments</span>
                 </p>
               </div>
               
@@ -247,11 +252,11 @@ const CheckoutStep: React.FC<Props> = ({ data, onBack }) => {
                 </Button>
               </div>
             </div>
-          </div>
+          </Card>
         </div>
       )}
 
-    </div>
+    </Card>
   );
 };
 

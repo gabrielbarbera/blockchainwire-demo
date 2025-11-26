@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { ReleaseFormData } from '../../../types';
 import { Button } from '../../../components/ui/Button';
+import { Card } from '../../../components/ui/Card';
+import { useThemeClasses } from '../../../hooks/useThemeClasses';
+import { useTheme } from '../../../contexts/ThemeContext';
 import { X } from 'lucide-react';
 
 interface Props {
@@ -11,6 +14,8 @@ interface Props {
 }
 
 const OptimizationStep: React.FC<Props> = ({ data, onChange, onNext, onBack }) => {
+  const classes = useThemeClasses();
+  const { theme } = useTheme();
   const [tagInput, setTagInput] = useState('');
 
   const totalCharCount = data.tags.reduce((acc, tag) => acc + tag.length, 0);
@@ -38,21 +43,21 @@ const OptimizationStep: React.FC<Props> = ({ data, onChange, onNext, onBack }) =
   };
 
   return (
-    <div className="space-y-4 sm:space-y-6 lg:space-y-8 animate-fade-in bg-white p-4 sm:p-6 lg:p-8 rounded-lg shadow-sm border border-secondary-light min-h-[400px] sm:min-h-[500px]">
+    <Card variant="default" className="space-y-4 sm:space-y-6 lg:space-y-8 animate-fade-in p-4 sm:p-6 lg:p-8 min-h-[400px] sm:min-h-[500px]">
       <div>
-        <h2 className="text-lg sm:text-xl font-semibold text-secondary-black mb-1 sm:mb-2">3. Optimization</h2>
-        <h3 className="text-base sm:text-lg font-medium text-secondary-dark mb-2 sm:mb-3">Keywords</h3>
-        <p className="text-xs sm:text-sm text-secondary-medium mb-3 sm:mb-4 leading-relaxed">
+        <h2 className={`text-lg sm:text-xl font-semibold mb-1 sm:mb-2 ${classes.text.black}`}>3. Optimization</h2>
+        <h3 className={`text-base sm:text-lg font-medium mb-2 sm:mb-3 ${classes.text.primary}`}>Keywords</h3>
+        <p className={`text-xs sm:text-sm mb-3 sm:mb-4 leading-relaxed ${classes.text.secondary}`}>
           Add keywords used for Blockchain Wire's media network to make it easier to find and locate news of their interest. Best practice is to include 3-5 tags where each tag is limited to 30 characters. The total number of characters for all Release Tags is 120 characters.
         </p>
       </div>
 
-      <div className="bg-secondary-light/30 p-4 sm:p-6 rounded-lg border border-secondary-light">
+      <div className={`p-4 sm:p-6 rounded-lg border ${classes.bg.tertiary} ${classes.border.default}`}>
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-end mb-3 sm:mb-4">
           <div className="flex-1">
             <div className="flex items-center justify-between mb-1">
-              <label className="block text-xs sm:text-sm text-secondary-dark">Tag Name:</label>
-              <span className="text-xs text-secondary-medium sm:hidden">{tagInput.length}/30</span>
+              <label className={`block text-xs sm:text-sm ${classes.text.primary}`}>Tag Name:</label>
+              <span className={`text-xs sm:hidden ${classes.text.secondary}`}>{tagInput.length}/30</span>
             </div>
             <input 
               type="text"
@@ -61,12 +66,12 @@ const OptimizationStep: React.FC<Props> = ({ data, onChange, onNext, onBack }) =
               maxLength={30}
               onKeyDown={handleKeyDown}
               placeholder="Enter tag name"
-              className="w-full border border-secondary-medium/50 rounded p-2.5 sm:p-2 bg-white text-secondary-black text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all"
+              className={`w-full border rounded p-2.5 sm:p-2 text-sm sm:text-base focus:outline-none focus:ring-2 transition-all ${classes.border.default} ${classes.bg.card} ${classes.text.black} ${theme === 'cs' ? 'focus:ring-wire-accent focus:border-wire-accent' : 'focus:ring-primary focus:border-primary'}`}
             />
           </div>
           <div className="hidden sm:block w-28 lg:w-32">
-            <label className="block text-sm text-secondary-dark mb-1">Character count:</label>
-            <div className="w-full border border-secondary-medium/50 rounded p-2 bg-white text-secondary-black text-center font-medium">
+            <label className={`block text-sm mb-1 ${classes.text.primary}`}>Character count:</label>
+            <div className={`w-full border rounded p-2 text-center font-medium ${classes.border.default} ${classes.bg.card} ${classes.text.black}`}>
               {tagInput.length}
             </div>
           </div>
@@ -83,23 +88,23 @@ const OptimizationStep: React.FC<Props> = ({ data, onChange, onNext, onBack }) =
           </Button>
         </div>
 
-        <div className="flex items-center justify-between text-xs sm:text-sm text-secondary-medium mb-3 sm:mb-2">
+        <div className={`flex items-center justify-between text-xs sm:text-sm mb-3 sm:mb-2 ${classes.text.secondary}`}>
           <span className="font-medium">Total characters: <span className={totalCharCount > MAX_TOTAL_CHARS ? 'text-red-500' : ''}>{totalCharCount}</span>/{MAX_TOTAL_CHARS}</span>
-          <span className="text-xs text-secondary-medium">{data.tags.length}/5 tags</span>
+          <span className={`text-xs ${classes.text.secondary}`}>{data.tags.length}/5 tags</span>
         </div>
 
         <div className="flex flex-wrap gap-2 mt-3 sm:mt-4 min-h-[40px] items-center">
           {data.tags.length === 0 && (
-            <span className="text-xs sm:text-sm text-secondary-medium italic w-full text-center py-2">
+            <span className={`text-xs sm:text-sm italic w-full text-center py-2 ${classes.text.secondary}`}>
               No tags added yet.
             </span>
           )}
           {data.tags.map((tag, i) => (
-            <div key={i} className="flex items-center gap-1.5 bg-secondary-light text-secondary-dark px-2.5 sm:px-3 py-1.5 sm:py-1 rounded-full text-xs sm:text-sm border border-secondary-medium/30 group">
+            <div key={i} className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-1 rounded-full text-xs sm:text-sm border group ${classes.bg.secondary} ${classes.text.primary} ${classes.border.default}`}>
               <span className="max-w-[200px] sm:max-w-none truncate">{tag}</span>
               <button 
                 onClick={() => removeTag(tag)} 
-                className="hover:text-red-500 transition-colors flex-shrink-0 p-0.5 rounded-full hover:bg-red-50"
+                className="hover:text-red-500 transition-colors flex-shrink-0 p-0.5 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20"
                 aria-label={`Remove tag ${tag}`}
               >
                 <X size={12} className="sm:w-3.5 sm:h-3.5" />
@@ -109,7 +114,7 @@ const OptimizationStep: React.FC<Props> = ({ data, onChange, onNext, onBack }) =
         </div>
       </div>
 
-    </div>
+    </Card>
   );
 };
 

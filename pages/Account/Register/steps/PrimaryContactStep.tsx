@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { Button } from '../../../../components/ui/Button';
+import { Card } from '../../../../components/ui/Card';
+import { useThemeClasses } from '../../../../hooks/useThemeClasses';
+import { useTheme } from '../../../../contexts/ThemeContext';
 import { Eye, EyeOff } from 'lucide-react';
 
 interface PrimaryContactData {
@@ -38,6 +41,8 @@ interface Props {
 }
 
 const PrimaryContactStep: React.FC<Props> = ({ data, onChange, companyInfo, onNext, onBack }) => {
+  const classes = useThemeClasses();
+  const { theme } = useTheme();
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatPassword, setShowRepeatPassword] = useState(false);
 
@@ -94,45 +99,45 @@ const PrimaryContactStep: React.FC<Props> = ({ data, onChange, companyInfo, onNe
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-secondary-light p-6 sm:p-8">
-      <h2 className="text-xl sm:text-2xl font-bold text-secondary-black mb-6">Primary Contact</h2>
+    <Card variant="default" className="p-6 sm:p-8">
+      <h2 className={`text-xl sm:text-2xl font-bold mb-6 ${classes.text.black}`}>Primary Contact</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Left Column */}
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-secondary-dark mb-1">
-              First name<span className="text-primary">*</span>
+            <label className={`block text-sm font-medium mb-1 ${classes.text.primary}`}>
+              First name<span className={theme === 'cs' ? 'text-wire-accent' : 'text-primary'}>*</span>
             </label>
             <input
               type="text"
               value={data.firstName}
               onChange={(e) => handleChange('firstName', e.target.value)}
-              className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors"
+              className={`w-full border rounded p-2 sm:p-2.5 text-sm sm:text-base focus:outline-none transition-colors ${classes.bg.tertiary} ${classes.border.default} ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'}`}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-secondary-dark mb-1">
-              Last name<span className="text-primary">*</span>
+            <label className={`block text-sm font-medium mb-1 ${classes.text.primary}`}>
+              Last name<span className={theme === 'cs' ? 'text-wire-accent' : 'text-primary'}>*</span>
             </label>
             <input
               type="text"
               value={data.lastName}
               onChange={(e) => handleChange('lastName', e.target.value)}
-              className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors"
+              className={`w-full border rounded p-2 sm:p-2.5 text-sm sm:text-base focus:outline-none transition-colors ${classes.bg.tertiary} ${classes.border.default} ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'}`}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-secondary-dark mb-1">
+            <label className={`block text-sm font-medium mb-1 ${classes.text.primary}`}>
               Position/Title
             </label>
             <input
               type="text"
               value={data.positionTitle}
               onChange={(e) => handleChange('positionTitle', e.target.value)}
-              className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors"
+              className={`w-full border rounded p-2 sm:p-2.5 text-sm sm:text-base focus:outline-none transition-colors ${classes.bg.tertiary} ${classes.border.default} ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'}`}
             />
           </div>
 
@@ -142,29 +147,29 @@ const PrimaryContactStep: React.FC<Props> = ({ data, onChange, companyInfo, onNe
               id="useCompanyAddress"
               checked={data.useCompanyAddress}
               onChange={(e) => handleUseCompanyAddressChange(e.target.checked)}
-              className="w-4 h-4 text-primary border-secondary-light rounded focus:ring-primary"
+              className={`w-4 h-4 rounded ${theme === 'cs' ? 'text-wire-accent border-wire-accent focus:ring-wire-accent' : 'text-primary border-secondary-light focus:ring-primary'}`}
             />
-            <label htmlFor="useCompanyAddress" className="text-sm text-secondary-dark">
+            <label htmlFor="useCompanyAddress" className={`text-sm ${classes.text.primary}`}>
               Address is the same as the one in the Company Information step
             </label>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-secondary-dark mb-1">
-              Country<span className="text-primary">*</span>
+            <label className={`block text-sm font-medium mb-1 ${classes.text.primary}`}>
+              Country<span className={theme === 'cs' ? 'text-wire-accent' : 'text-primary'}>*</span>
             </label>
             <input
               type="text"
               value={data.country}
               onChange={(e) => handleChange('country', e.target.value)}
               disabled={data.useCompanyAddress}
-              className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors disabled:opacity-50"
+              className={`w-full border rounded p-2 sm:p-2.5 text-sm sm:text-base focus:outline-none transition-colors disabled:opacity-50 ${classes.bg.tertiary} ${classes.border.default} ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'}`}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-secondary-dark mb-1">
-              Company Address<span className="text-primary">*</span>
+            <label className={`block text-sm font-medium mb-1 ${classes.text.primary}`}>
+              Company Address<span className={theme === 'cs' ? 'text-wire-accent' : 'text-primary'}>*</span>
             </label>
             <input
               type="text"
@@ -172,12 +177,12 @@ const PrimaryContactStep: React.FC<Props> = ({ data, onChange, companyInfo, onNe
               onChange={(e) => handleChange('address', e.target.value)}
               disabled={data.useCompanyAddress}
               placeholder="No P.O. Boxes"
-              className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors disabled:opacity-50"
+              className={`w-full border rounded p-2 sm:p-2.5 text-sm sm:text-base focus:outline-none transition-colors disabled:opacity-50 ${classes.bg.tertiary} ${classes.border.default} ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'}`}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-secondary-dark mb-1">
+            <label className={`block text-sm font-medium mb-1 ${classes.text.primary}`}>
               Company Address 2
             </label>
             <input
@@ -185,25 +190,25 @@ const PrimaryContactStep: React.FC<Props> = ({ data, onChange, companyInfo, onNe
               value={data.address2}
               onChange={(e) => handleChange('address2', e.target.value)}
               disabled={data.useCompanyAddress}
-              className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors disabled:opacity-50"
+              className={`w-full border rounded p-2 sm:p-2.5 text-sm sm:text-base focus:outline-none transition-colors disabled:opacity-50 ${classes.bg.tertiary} ${classes.border.default} ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'}`}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-secondary-dark mb-1">
-              City<span className="text-primary">*</span>
+            <label className={`block text-sm font-medium mb-1 ${classes.text.primary}`}>
+              City<span className={theme === 'cs' ? 'text-wire-accent' : 'text-primary'}>*</span>
             </label>
             <input
               type="text"
               value={data.city}
               onChange={(e) => handleChange('city', e.target.value)}
               disabled={data.useCompanyAddress}
-              className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors disabled:opacity-50"
+              className={`w-full border rounded p-2 sm:p-2.5 text-sm sm:text-base focus:outline-none transition-colors disabled:opacity-50 ${classes.bg.tertiary} ${classes.border.default} ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'}`}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-secondary-dark mb-1">
+            <label className={`block text-sm font-medium mb-1 ${classes.text.primary}`}>
               State/Province
             </label>
             <input
@@ -211,12 +216,12 @@ const PrimaryContactStep: React.FC<Props> = ({ data, onChange, companyInfo, onNe
               value={data.stateProvince}
               onChange={(e) => handleChange('stateProvince', e.target.value)}
               disabled={data.useCompanyAddress}
-              className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors disabled:opacity-50"
+              className={`w-full border rounded p-2 sm:p-2.5 text-sm sm:text-base focus:outline-none transition-colors disabled:opacity-50 ${classes.bg.tertiary} ${classes.border.default} ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'}`}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-secondary-dark mb-1">
+            <label className={`block text-sm font-medium mb-1 ${classes.text.primary}`}>
               Postal Code
             </label>
             <input
@@ -224,7 +229,7 @@ const PrimaryContactStep: React.FC<Props> = ({ data, onChange, companyInfo, onNe
               value={data.postalCode}
               onChange={(e) => handleChange('postalCode', e.target.value)}
               disabled={data.useCompanyAddress}
-              className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors disabled:opacity-50"
+              className={`w-full border rounded p-2 sm:p-2.5 text-sm sm:text-base focus:outline-none transition-colors disabled:opacity-50 ${classes.bg.tertiary} ${classes.border.default} ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'}`}
             />
           </div>
         </div>
@@ -232,22 +237,22 @@ const PrimaryContactStep: React.FC<Props> = ({ data, onChange, companyInfo, onNe
         {/* Right Column */}
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-secondary-dark mb-1">
-              Primary Phone<span className="text-primary">*</span>
+            <label className={`block text-sm font-medium mb-1 ${classes.text.primary}`}>
+              Primary Phone<span className={theme === 'cs' ? 'text-wire-accent' : 'text-primary'}>*</span>
             </label>
             <div className="flex gap-2">
               <div className="relative w-24">
                 <select
                   value={data.primaryPhone.countryCode}
                   onChange={(e) => handlePhoneChange('primaryPhone', 'countryCode', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors appearance-none pr-8"
+                  className={`w-full border rounded p-2 sm:p-2.5 text-sm sm:text-base focus:outline-none transition-colors appearance-none pr-8 ${classes.bg.tertiary} ${classes.border.default} ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'}`}
                 >
                   <option value="US+1">US+1</option>
                   <option value="CA+1">CA+1</option>
                   <option value="UK+44">UK+44</option>
                 </select>
                 <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                  <svg className="w-4 h-4 text-secondary-medium" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className={`w-4 h-4 ${classes.text.secondary}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </div>
@@ -256,13 +261,13 @@ const PrimaryContactStep: React.FC<Props> = ({ data, onChange, companyInfo, onNe
                 type="tel"
                 value={data.primaryPhone.number}
                 onChange={(e) => handlePhoneChange('primaryPhone', 'number', e.target.value)}
-                className="flex-1 bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                className={`flex-1 border rounded p-2 sm:p-2.5 text-sm sm:text-base focus:outline-none transition-colors ${classes.bg.tertiary} ${classes.border.default} ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'}`}
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-secondary-dark mb-1">
+            <label className={`block text-sm font-medium mb-1 ${classes.text.primary}`}>
               Cell Phone
             </label>
             <div className="flex gap-2">
@@ -270,14 +275,14 @@ const PrimaryContactStep: React.FC<Props> = ({ data, onChange, companyInfo, onNe
                 <select
                   value={data.cellPhone.countryCode}
                   onChange={(e) => handlePhoneChange('cellPhone', 'countryCode', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors appearance-none pr-8"
+                  className={`w-full border rounded p-2 sm:p-2.5 text-sm sm:text-base focus:outline-none transition-colors appearance-none pr-8 ${classes.bg.tertiary} ${classes.border.default} ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'}`}
                 >
                   <option value="US+1">US+1</option>
                   <option value="CA+1">CA+1</option>
                   <option value="UK+44">UK+44</option>
                 </select>
                 <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                  <svg className="w-4 h-4 text-secondary-medium" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className={`w-4 h-4 ${classes.text.secondary}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </div>
@@ -286,38 +291,38 @@ const PrimaryContactStep: React.FC<Props> = ({ data, onChange, companyInfo, onNe
                 type="tel"
                 value={data.cellPhone.number}
                 onChange={(e) => handlePhoneChange('cellPhone', 'number', e.target.value)}
-                className="flex-1 bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                className={`flex-1 border rounded p-2 sm:p-2.5 text-sm sm:text-base focus:outline-none transition-colors ${classes.bg.tertiary} ${classes.border.default} ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'}`}
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-secondary-dark mb-1">
-              Email<span className="text-primary">*</span> <span className="text-xs text-secondary-medium">(Corporate Addresses only)</span>
+            <label className={`block text-sm font-medium mb-1 ${classes.text.primary}`}>
+              Email<span className={theme === 'cs' ? 'text-wire-accent' : 'text-primary'}>*</span> <span className={`text-xs ${classes.text.secondary}`}>(Corporate Addresses only)</span>
             </label>
             <input
               type="email"
               value={data.email}
               onChange={(e) => handleChange('email', e.target.value)}
-              className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors"
+              className={`w-full border rounded p-2 sm:p-2.5 text-sm sm:text-base focus:outline-none transition-colors ${classes.bg.tertiary} ${classes.border.default} ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'}`}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-secondary-dark mb-1">
-              Password<span className="text-primary">*</span> <span className="text-xs text-secondary-medium">(Min length 6 characters, one uppercase, one lowercase and one number.)</span>
+            <label className={`block text-sm font-medium mb-1 ${classes.text.primary}`}>
+              Password<span className={theme === 'cs' ? 'text-wire-accent' : 'text-primary'}>*</span> <span className={`text-xs ${classes.text.secondary}`}>(Min length 6 characters, one uppercase, one lowercase and one number.)</span>
             </label>
             <div className="relative">
               <input
                 type={showPassword ? 'text' : 'password'}
                 value={data.password}
                 onChange={(e) => handleChange('password', e.target.value)}
-                className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors pr-10"
+                className={`w-full border rounded p-2 sm:p-2.5 text-sm sm:text-base focus:outline-none transition-colors pr-10 ${classes.bg.tertiary} ${classes.border.default} ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'}`}
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-secondary-medium hover:text-secondary-dark"
+                className={`absolute right-2 top-1/2 transform -translate-y-1/2 ${classes.text.secondary} hover:opacity-80 transition-colors`}
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
@@ -328,20 +333,20 @@ const PrimaryContactStep: React.FC<Props> = ({ data, onChange, companyInfo, onNe
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-secondary-dark mb-1">
-              Repeat Password<span className="text-primary">*</span>
+            <label className={`block text-sm font-medium mb-1 ${classes.text.primary}`}>
+              Repeat Password<span className={theme === 'cs' ? 'text-wire-accent' : 'text-primary'}>*</span>
             </label>
             <div className="relative">
               <input
                 type={showRepeatPassword ? 'text' : 'password'}
                 value={data.repeatPassword}
                 onChange={(e) => handleChange('repeatPassword', e.target.value)}
-                className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors pr-10"
+                className={`w-full border rounded p-2 sm:p-2.5 text-sm sm:text-base focus:outline-none transition-colors pr-10 ${classes.bg.tertiary} ${classes.border.default} ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'}`}
               />
               <button
                 type="button"
                 onClick={() => setShowRepeatPassword(!showRepeatPassword)}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-secondary-medium hover:text-secondary-dark"
+                className={`absolute right-2 top-1/2 transform -translate-y-1/2 ${classes.text.secondary} hover:opacity-80 transition-colors`}
               >
                 {showRepeatPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
@@ -353,7 +358,7 @@ const PrimaryContactStep: React.FC<Props> = ({ data, onChange, companyInfo, onNe
         </div>
       </div>
 
-      <div className="flex justify-between mt-8 pt-6 border-t border-secondary-light">
+      <div className={`flex justify-between mt-8 pt-6 border-t ${classes.border.default}`}>
         <Button variant="outline" onClick={onBack} size="lg">
           Previous
         </Button>
@@ -365,7 +370,7 @@ const PrimaryContactStep: React.FC<Props> = ({ data, onChange, companyInfo, onNe
           Next
         </Button>
       </div>
-    </div>
+    </Card>
   );
 };
 

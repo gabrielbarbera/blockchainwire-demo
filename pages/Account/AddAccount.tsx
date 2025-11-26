@@ -1,5 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { Button } from '../../components/ui/Button';
+import { Card } from '../../components/ui/Card';
+import { useThemeClasses } from '../../hooks/useThemeClasses';
+import { useTheme } from '../../contexts/ThemeContext';
 import { Upload, Info, X, CheckCircle, AlertCircle, UserCircle } from 'lucide-react';
 import { useAccount } from '../../contexts/AccountContext';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +10,8 @@ import { useNavigate } from 'react-router-dom';
 const AddAccount: React.FC = () => {
   const { addAccount } = useAccount();
   const navigate = useNavigate();
+  const classes = useThemeClasses();
+  const { theme } = useTheme();
   const [activeTab, setActiveTab] = useState<'select-type' | 'create-account'>('select-type');
   
   const [answers, setAnswers] = useState<{
@@ -138,24 +143,26 @@ const AddAccount: React.FC = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto pb-20 animate-fade-in">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 animate-fade-in">
       {/* Header Section */}
-      <div className="flex items-center gap-2 text-secondary-dark mb-8">
-        <div className="p-2 bg-primary-light rounded-lg">
-          <UserCircle className="text-primary" size={20} />
-        </div>
-        <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-secondary-black">Add Secondary Account</h1>
-          <p className="text-sm text-secondary-medium">Add a secondary account to send press releases under a different company name.</p>
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 sm:mb-8 gap-4">
+        <div className={`flex items-center gap-2 ${classes.text.secondary}`}>
+          <div className={`p-1.5 sm:p-2 rounded-lg ${classes.icon.container}`}>
+            <UserCircle className={theme === 'cs' ? 'text-wire-accent' : 'text-primary'} size={18} />
+          </div>
+          <div>
+            <h1 className={`text-lg sm:text-xl lg:text-2xl font-bold ${classes.text.black}`}>Add Secondary Account</h1>
+            <p className={`text-xs sm:text-sm ${classes.text.secondary}`}>Add a secondary account to send press releases under a different company name.</p>
+          </div>
         </div>
       </div>
 
-      <div className="flex border-b border-secondary-light mb-6">
+      <div className={`flex border-b mb-6 ${classes.border.default}`}>
         <button
           className={`px-6 py-3 font-medium text-sm transition-colors border-b-2 ${
             activeTab === 'select-type'
-              ? 'border-primary text-primary'
-              : 'border-transparent text-secondary-medium hover:text-secondary-dark'
+              ? `${theme === 'cs' ? 'border-cs-accent text-cs-accent' : 'border-primary text-primary'}`
+              : `border-transparent ${classes.text.secondary} hover:${classes.text.primary}`
           }`}
           onClick={() => setActiveTab('select-type')}
         >
@@ -164,8 +171,8 @@ const AddAccount: React.FC = () => {
         <button
           className={`px-6 py-3 font-medium text-sm transition-colors border-b-2 ${
             activeTab === 'create-account'
-              ? 'border-primary text-primary'
-              : 'border-transparent text-secondary-medium hover:text-secondary-dark'
+              ? `${theme === 'cs' ? 'border-cs-accent text-cs-accent' : 'border-primary text-primary'}`
+              : `border-transparent ${classes.text.secondary} hover:${classes.text.primary}`
           }`}
           onClick={() => setActiveTab('create-account')}
         >
@@ -175,34 +182,34 @@ const AddAccount: React.FC = () => {
 
       {activeTab === 'select-type' && (
         <div className="space-y-8">
-          <div className="bg-secondary-light/30 p-6 rounded-lg border border-secondary-light">
+          <Card variant="compact" className={`p-6 ${classes.bg.tertiary}`}>
             <div className="flex items-start gap-3 mb-4">
-              <Info className="text-primary mt-1" size={20} />
-              <h3 className="text-lg font-bold text-secondary-black">Company Information</h3>
+              <Info className={`mt-1 ${theme === 'cs' ? 'text-cs-accent' : 'text-primary'}`} size={20} />
+              <h3 className={`text-lg font-bold ${classes.text.black}`}>Company Information</h3>
             </div>
-            <p className="text-sm text-secondary-dark mb-4">
+            <p className={`text-sm mb-4 ${classes.text.primary}`}>
               This page allows you to add a new account. We Support two account types.
             </p>
-            <div className="space-y-4 text-sm text-secondary-dark pl-4">
+            <div className={`space-y-4 text-sm pl-4 ${classes.text.primary}`}>
               <p>
                 <span className="font-bold">1. Secondary Account:</span> a secondary account allows you to send press releases under a different company or organization name after logging into your primary account. Secondary accounts may also be setup with a separate logo, stock symbol(s) and public profile.
               </p>
               <p>
                 <span className="font-bold">2. Primary Account:</span> a primary account is only used when you want an invoice/credit card charge for billable services to be sent to (paid by) another party and/or when users not on your primary account need to login to their own account.
               </p>
-              <p className="italic bg-white p-3 rounded border border-secondary-light mt-2">
+              <Card variant="compact" className={`italic p-3 mt-2 ${classes.bg.card}`}>
                 In most cases, you will only need a secondary account. Please carefully consider whether you need a primary account. If you answer "YES" to any question below, you will need to set up a primary account.
-              </p>
+              </Card>
             </div>
-          </div>
+          </Card>
 
           <div className="space-y-6">
-            <div className={`flex items-center justify-between bg-white p-4 rounded-lg border shadow-sm transition-all ${
-              answers.billing === true ? 'border-primary bg-primary-light/10' : 
-              answers.billing === false ? 'border-secondary-light' : 
-              'border-secondary-light'
+            <Card variant="compact" className={`flex items-center justify-between p-4 transition-all ${
+              answers.billing === true 
+                ? theme === 'cs' ? 'border-cs-accent bg-cs-accent/10' : 'border-primary bg-primary-light/10'
+                : classes.border.default
             }`}>
-              <span className="text-sm font-medium text-secondary-black">Do you want the customer to be responsible for their own bills/credit card charges?</span>
+              <span className={`text-sm font-medium ${classes.text.black}`}>Do you want the customer to be responsible for their own bills/credit card charges?</span>
               <div className="flex gap-2">
                 <Button 
                   size="sm" 
@@ -219,14 +226,14 @@ const AddAccount: React.FC = () => {
                   No
                 </Button>
               </div>
-            </div>
+            </Card>
 
-            <div className={`flex items-center justify-between bg-white p-4 rounded-lg border shadow-sm transition-all ${
-              answers.login === true ? 'border-primary bg-primary-light/10' : 
-              answers.login === false ? 'border-secondary-light' : 
-              'border-secondary-light'
+            <Card variant="compact" className={`flex items-center justify-between p-4 transition-all ${
+              answers.login === true 
+                ? theme === 'cs' ? 'border-cs-accent bg-cs-accent/10' : 'border-primary bg-primary-light/10'
+                : classes.border.default
             }`}>
-              <span className="text-sm font-medium text-secondary-black">Will the customer's users need to login to review or approve?</span>
+              <span className={`text-sm font-medium ${classes.text.black}`}>Will the customer's users need to login to review or approve?</span>
               <div className="flex gap-2">
                 <Button 
                   size="sm" 
@@ -243,14 +250,14 @@ const AddAccount: React.FC = () => {
                   No
                 </Button>
               </div>
-            </div>
+            </Card>
 
-            <div className={`flex items-center justify-between bg-white p-4 rounded-lg border shadow-sm transition-all ${
-              answers.regulatory === true ? 'border-primary bg-primary-light/10' : 
-              answers.regulatory === false ? 'border-secondary-light' : 
-              'border-secondary-light'
+            <Card variant="compact" className={`flex items-center justify-between p-4 transition-all ${
+              answers.regulatory === true 
+                ? theme === 'cs' ? 'border-cs-accent bg-cs-accent/10' : 'border-primary bg-primary-light/10'
+                : classes.border.default
             }`}>
-              <span className="text-sm font-medium text-secondary-black">Will the customer use EDGAR, SEDAR or EU Regulatory filing services?</span>
+              <span className={`text-sm font-medium ${classes.text.black}`}>Will the customer use EDGAR, SEDAR or EU Regulatory filing services?</span>
               <div className="flex gap-2">
                 <Button 
                   size="sm" 
@@ -272,27 +279,29 @@ const AddAccount: React.FC = () => {
 
           {/* Summary and Continue Button */}
           {Object.values(answers).every(a => a !== null) && (
-            <div className={`mt-8 p-6 rounded-lg border-2 ${
+            <Card variant="compact" className={`mt-8 p-6 border-2 ${
               needsPrimaryAccount 
-                ? 'bg-primary-light/20 border-primary' 
-                : 'bg-green-50 border-green-200'
+                ? theme === 'cs' ? 'bg-cs-accent/20 border-cs-accent' : 'bg-primary-light/20 border-primary'
+                : 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-700'
             }`}>
               <div className="flex items-start gap-3">
                 {needsPrimaryAccount ? (
-                  <AlertCircle className="text-primary mt-1 flex-shrink-0" size={20} />
+                  <AlertCircle className={`mt-1 flex-shrink-0 ${theme === 'cs' ? 'text-cs-accent' : 'text-primary'}`} size={20} />
                 ) : (
-                  <CheckCircle className="text-green-600 mt-1 flex-shrink-0" size={20} />
+                  <CheckCircle className="text-green-600 dark:text-green-400 mt-1 flex-shrink-0" size={20} />
                 )}
                 <div className="flex-1">
                   <h4 className={`font-bold mb-2 ${
-                    needsPrimaryAccount ? 'text-primary' : 'text-green-800'
+                    needsPrimaryAccount 
+                      ? theme === 'cs' ? 'text-cs-accent' : 'text-primary'
+                      : 'text-green-800 dark:text-green-300'
                   }`}>
                     {needsPrimaryAccount 
                       ? 'Primary Account Required' 
                       : 'Secondary Account is Sufficient'}
                   </h4>
                   <p className={`text-sm mb-4 ${
-                    needsPrimaryAccount ? 'text-secondary-dark' : 'text-green-700'
+                    needsPrimaryAccount ? classes.text.primary : 'text-green-700 dark:text-green-300'
                   }`}>
                     {needsPrimaryAccount 
                       ? 'Based on your answers, you need to create a Primary Account. This will redirect you to the full registration process.'
@@ -305,142 +314,141 @@ const AddAccount: React.FC = () => {
                   >
                     {needsPrimaryAccount ? 'Go to Registration' : 'Continue to Create Account'}
                   </Button>
-                </div>
-              </div>
             </div>
-          )}
+          </Card>
+        )}
+      )}
         </div>
       )}
 
       {activeTab === 'create-account' && (
-        <div className="bg-white p-8 rounded-lg shadow-sm border border-secondary-light">
+        <Card variant="default" className="p-8">
           <div className="mb-6">
-            <h3 className="text-lg font-bold text-secondary-black mb-2">Secondary Account Information</h3>
-            <p className="text-sm text-secondary-medium">Fill in the details for your secondary account.</p>
+            <h3 className={`text-lg font-bold mb-2 ${classes.text.black}`}>Secondary Account Information</h3>
+            <p className={`text-sm ${classes.text.secondary}`}>Fill in the details for your secondary account.</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div>
-              <label className="block text-xs font-bold text-secondary-medium uppercase mb-1">Account Name:*</label>
+              <label className={`block text-xs font-bold uppercase mb-1 ${classes.text.secondary}`}>Account Name:*</label>
               <input 
                 name="accountName"
                 value={formData.accountName}
                 onChange={handleInputChange}
-                className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none"
+                className={`w-full border rounded p-2 focus:outline-none transition-all ${classes.bg.tertiary} ${classes.border.default} ${classes.text.black} ${theme === 'cs' ? 'focus:border-cs-accent' : 'focus:border-primary'}`}
               />
             </div>
             
             <div>
-              <label className="block text-xs font-bold text-secondary-medium uppercase mb-1">Primary Contact Phone:*</label>
+              <label className={`block text-xs font-bold uppercase mb-1 ${classes.text.secondary}`}>Primary Contact Phone:*</label>
               <input 
                 name="primaryPhone"
                 value={formData.primaryPhone}
                 onChange={handleInputChange}
-                className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none"
+                className={`w-full border rounded p-2 focus:outline-none transition-all ${classes.bg.tertiary} ${classes.border.default} ${classes.text.black} ${theme === 'cs' ? 'focus:border-cs-accent' : 'focus:border-primary'}`}
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-secondary-medium uppercase mb-1">City:*</label>
+              <label className={`block text-xs font-bold uppercase mb-1 ${classes.text.secondary}`}>City:*</label>
               <input 
                 name="city"
                 value={formData.city}
                 onChange={handleInputChange}
-                className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none"
+                className={`w-full border rounded p-2 focus:outline-none transition-all ${classes.bg.tertiary} ${classes.border.default} ${classes.text.black} ${theme === 'cs' ? 'focus:border-cs-accent' : 'focus:border-primary'}`}
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-secondary-medium uppercase mb-1">Business/Industry:*</label>
+              <label className={`block text-xs font-bold uppercase mb-1 ${classes.text.secondary}`}>Business/Industry:*</label>
               <input 
                 name="industry"
                 value={formData.industry}
                 onChange={handleInputChange}
-                className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none"
+                className={`w-full border rounded p-2 focus:outline-none transition-all ${classes.bg.tertiary} ${classes.border.default} ${classes.text.black} ${theme === 'cs' ? 'focus:border-cs-accent' : 'focus:border-primary'}`}
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-secondary-medium uppercase mb-1">State/Province:</label>
+              <label className={`block text-xs font-bold uppercase mb-1 ${classes.text.secondary}`}>State/Province:</label>
               <input 
                 name="state"
                 value={formData.state}
                 onChange={handleInputChange}
-                className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none"
+                className={`w-full border rounded p-2 focus:outline-none transition-all ${classes.bg.tertiary} ${classes.border.default} ${classes.text.black} ${theme === 'cs' ? 'focus:border-cs-accent' : 'focus:border-primary'}`}
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-secondary-medium uppercase mb-1">Website:*</label>
+              <label className={`block text-xs font-bold uppercase mb-1 ${classes.text.secondary}`}>Website:*</label>
               <input 
                 name="website"
                 value={formData.website}
                 onChange={handleInputChange}
-                className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none"
+                className={`w-full border rounded p-2 focus:outline-none transition-all ${classes.bg.tertiary} ${classes.border.default} ${classes.text.black} ${theme === 'cs' ? 'focus:border-cs-accent' : 'focus:border-primary'}`}
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-secondary-medium uppercase mb-1">Postal Code:</label>
+              <label className={`block text-xs font-bold uppercase mb-1 ${classes.text.secondary}`}>Postal Code:</label>
               <input 
                 name="postalCode"
                 value={formData.postalCode}
                 onChange={handleInputChange}
-                className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none"
+                className={`w-full border rounded p-2 focus:outline-none transition-all ${classes.bg.tertiary} ${classes.border.default} ${classes.text.black} ${theme === 'cs' ? 'focus:border-cs-accent' : 'focus:border-primary'}`}
               />
             </div>
 
-
             <div>
-              <label className="block text-xs font-bold text-secondary-medium uppercase mb-1">Referral:</label>
+              <label className={`block text-xs font-bold uppercase mb-1 ${classes.text.secondary}`}>Referral:</label>
               <input 
                 name="referral"
                 value={formData.referral}
                 onChange={handleInputChange}
-                className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none"
+                className={`w-full border rounded p-2 focus:outline-none transition-all ${classes.bg.tertiary} ${classes.border.default} ${classes.text.black} ${theme === 'cs' ? 'focus:border-cs-accent' : 'focus:border-primary'}`}
               />
             </div>
             
             <div className="hidden md:block"></div>
 
             <div>
-              <label className="block text-xs font-bold text-secondary-medium uppercase mb-1">Country*:</label>
+              <label className={`block text-xs font-bold uppercase mb-1 ${classes.text.secondary}`}>Country*:</label>
               <input 
                 name="country"
                 value={formData.country}
                 onChange={handleInputChange}
-                className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none"
+                className={`w-full border rounded p-2 focus:outline-none transition-all ${classes.bg.tertiary} ${classes.border.default} ${classes.text.black} ${theme === 'cs' ? 'focus:border-cs-accent' : 'focus:border-primary'}`}
               />
             </div>
              <div className="hidden md:block"></div>
 
             <div className="md:col-span-2">
-              <label className="block text-xs font-bold text-secondary-medium uppercase mb-1">Company Address:*</label>
+              <label className={`block text-xs font-bold uppercase mb-1 ${classes.text.secondary}`}>Company Address:*</label>
               <input 
                 name="address"
                 value={formData.address}
                 onChange={handleInputChange}
-                className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none"
+                className={`w-full border rounded p-2 focus:outline-none transition-all ${classes.bg.tertiary} ${classes.border.default} ${classes.text.black} ${theme === 'cs' ? 'focus:border-cs-accent' : 'focus:border-primary'}`}
               />
             </div>
 
             <div className="md:col-span-2">
-              <label className="block text-xs font-bold text-secondary-medium uppercase mb-1">Contact Email*:</label>
+              <label className={`block text-xs font-bold uppercase mb-1 ${classes.text.secondary}`}>Contact Email*:</label>
               <input 
                 name="contactEmail"
                 value={formData.contactEmail}
                 onChange={handleInputChange}
-                className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none"
+                className={`w-full border rounded p-2 focus:outline-none transition-all ${classes.bg.tertiary} ${classes.border.default} ${classes.text.black} ${theme === 'cs' ? 'focus:border-cs-accent' : 'focus:border-primary'}`}
               />
             </div>
           </div>
 
           <div className="space-y-4 mb-8">
-            <h4 className="font-bold text-secondary-black flex items-center gap-2">
+            <h4 className={`font-bold flex items-center gap-2 ${classes.text.black}`}>
               <Upload size={18} /> Upload logo
             </h4>
             {logo.preview ? (
-              <div className="border border-secondary-light rounded-lg p-4 bg-white">
+              <Card variant="compact" className="p-4">
                 <div className="relative inline-block">
                   <img
                     src={logo.preview}
@@ -455,20 +463,22 @@ const AddAccount: React.FC = () => {
                     <X size={16} />
                   </button>
                 </div>
-                <p className="text-xs text-secondary-medium mt-2">{logo.name}</p>
-              </div>
+                <p className={`text-xs mt-2 ${classes.text.secondary}`}>{logo.name}</p>
+              </Card>
             ) : (
               <div
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
                 onClick={() => logoInputRef.current?.click()}
-                className={`bg-secondary-light/30 border-2 border-dashed rounded-lg p-10 flex flex-col items-center justify-center text-secondary-medium transition-colors cursor-pointer ${
-                  isDragging ? 'border-primary bg-primary-light/10' : 'border-secondary-light hover:bg-secondary-light/50'
+                className={`border-2 border-dashed rounded-lg p-10 flex flex-col items-center justify-center transition-colors cursor-pointer ${classes.bg.tertiary} ${
+                  isDragging 
+                    ? theme === 'cs' ? 'border-cs-accent bg-cs-accent/10' : 'border-primary bg-primary-light/10'
+                    : classes.border.default
                 }`}
               >
-                <Upload size={32} className={`mb-2 ${isDragging ? 'text-primary' : 'opacity-50'}`} />
-                <p>Drag and drop or <span className="text-primary font-medium">browse</span></p>
+                <Upload size={32} className={`mb-2 ${isDragging ? (theme === 'cs' ? 'text-cs-accent' : 'text-primary') : 'opacity-50'}`} />
+                <p className={classes.text.secondary}>Drag and drop or <span className={`${theme === 'cs' ? 'text-cs-accent' : 'text-primary'} font-medium`}>browse</span></p>
                 <input
                   ref={logoInputRef}
                   type="file"
@@ -478,14 +488,14 @@ const AddAccount: React.FC = () => {
                 />
               </div>
             )}
-            <div className="text-xs text-secondary-dark font-medium mt-2">
+            <div className={`text-xs font-medium mt-2 ${classes.text.primary}`}>
               Note:
               <br />
-              <span className="font-normal text-secondary-medium">We accept jpg and png files, with a maximum allowed size of 256KB</span>
+              <span className={`font-normal ${classes.text.secondary}`}>We accept jpg and png files, with a maximum allowed size of 256KB</span>
             </div>
           </div>
 
-          <div className="pt-4 border-t border-secondary-light flex items-center justify-between">
+          <div className={`pt-4 border-t flex items-center justify-between ${classes.border.default}`}>
             <Button 
               variant="outline" 
               size="lg"

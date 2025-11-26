@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Settings, Building2, User, Upload, X, Mail, Key, FileText, Eye, EyeOff, ChevronDown } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
+import { useThemeClasses } from '../../hooks/useThemeClasses';
+import { useTheme } from '../../contexts/ThemeContext';
 
 interface CompanyInfo {
   companyName: string;
@@ -56,6 +58,8 @@ interface PrimaryContact {
 }
 
 const AccountSettings: React.FC = () => {
+  const classes = useThemeClasses();
+  const { theme, colorMode } = useTheme();
   const [companyInfo, setCompanyInfo] = useState<CompanyInfo>({
     companyName: 'TechVision Inc',
     country: 'United States',
@@ -272,12 +276,12 @@ const AccountSettings: React.FC = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 animate-fade-in">
       {/* Header Section */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 sm:mb-8 gap-4">
-        <div className="flex items-center gap-2 text-secondary-dark">
-          <div className="p-1.5 sm:p-2 bg-primary-light rounded-lg">
-            <Settings className="text-primary" size={18} />
+        <div className={`flex items-center gap-2 ${classes.text.primary}`}>
+          <div className={`p-1.5 sm:p-2 ${classes.icon.container} rounded-lg`}>
+            <Settings className={theme === 'cs' ? 'text-wire-accent' : 'text-primary'} size={18} />
           </div>
           <div>
-            <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-secondary-black">Account Settings</h1>
+            <h1 className={`text-lg sm:text-xl lg:text-2xl font-bold ${classes.text.black}`}>Account Settings</h1>
           </div>
         </div>
 
@@ -312,12 +316,12 @@ const AccountSettings: React.FC = () => {
             }`}
           >
             <div className="flex items-center gap-3">
-              <Building2 className="text-secondary-dark" size={20} />
-              <h2 className="text-lg sm:text-xl font-semibold text-secondary-black">Company Information</h2>
+              <Building2 className={classes.text.primary} size={20} />
+              <h2 className={`text-lg sm:text-xl font-semibold ${classes.text.black}`}>Company Information</h2>
             </div>
             <ChevronDown 
               size={20} 
-              className={`text-secondary-medium transition-transform duration-200 ${
+              className={`${classes.text.secondary} transition-transform duration-200 ${
                 expandedSections.companyInfo ? 'rotate-180' : ''
               }`}
             />
@@ -327,81 +331,81 @@ const AccountSettings: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6 animate-fade-in">
             <div className="space-y-3 sm:space-y-4">
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   Company Name:*
                 </label>
                 <input
                   type="text"
                   value={companyInfo.companyName}
                   onChange={(e) => handleCompanyInfoChange('companyName', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 text-sm sm:text-base text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                  className={`w-full ${classes.bg.tertiary} ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   Country:*
                 </label>
                 <input
                   type="text"
                   value={companyInfo.country}
                   onChange={(e) => handleCompanyInfoChange('country', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 text-sm sm:text-base text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                  className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   Company Address:*
                 </label>
                 <input
                   type="text"
                   value={companyInfo.companyAddress}
                   onChange={(e) => handleCompanyInfoChange('companyAddress', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 text-sm sm:text-base text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                  className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   Company Address 2:
                 </label>
                 <input
                   type="text"
                   value={companyInfo.companyAddress2}
                   onChange={(e) => handleCompanyInfoChange('companyAddress2', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 text-sm sm:text-base text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                  className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   City:*
                 </label>
                 <input
                   type="text"
                   value={companyInfo.city}
                   onChange={(e) => handleCompanyInfoChange('city', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 text-sm sm:text-base text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                  className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   Telegram:
                 </label>
                 <input
                   type="text"
                   value={companyInfo.telegram}
                   onChange={(e) => handleCompanyInfoChange('telegram', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 text-sm sm:text-base text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                  className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                 />
               </div>
             </div>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   State/Province:
                 </label>
                 <div className="relative">
@@ -409,10 +413,10 @@ const AccountSettings: React.FC = () => {
                     type="text"
                     value={companyInfo.stateProvince}
                     onChange={(e) => handleCompanyInfoChange('stateProvince', e.target.value)}
-                    className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors pr-8"
+                    className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors pr-8`}
                   />
                   <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                    <svg className="w-4 h-4 text-secondary-medium" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className={`w-4 h-4 ${classes.text.secondary}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </div>
@@ -420,31 +424,31 @@ const AccountSettings: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   Postal Code:
                 </label>
                 <input
                   type="text"
                   value={companyInfo.postalCode}
                   onChange={(e) => handleCompanyInfoChange('postalCode', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 text-sm sm:text-base text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                  className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   Referral:
                 </label>
                 <input
                   type="text"
                   value={companyInfo.referral}
                   onChange={(e) => handleCompanyInfoChange('referral', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 text-sm sm:text-base text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                  className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   Company Phone:*
                 </label>
                 <div className="flex gap-2">
@@ -452,14 +456,14 @@ const AccountSettings: React.FC = () => {
                     <select
                       value={companyInfo.companyPhone.countryCode}
                       onChange={(e) => handlePhoneChange('companyInfo', 'companyPhone', 'countryCode', e.target.value)}
-                      className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors appearance-none pr-8"
+                      className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors appearance-none pr-8`}
                     >
                       <option value="US+1">US+1</option>
                       <option value="CA+1">CA+1</option>
                       <option value="UK+44">UK+44</option>
                     </select>
                     <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                      <svg className="w-4 h-4 text-secondary-medium" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className={`w-4 h-4 ${classes.text.secondary}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                       </svg>
                     </div>
@@ -468,13 +472,13 @@ const AccountSettings: React.FC = () => {
                     type="tel"
                     value={companyInfo.companyPhone.number}
                     onChange={(e) => handlePhoneChange('companyInfo', 'companyPhone', 'number', e.target.value)}
-                    className="flex-1 bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                    className={`flex-1 ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   Cell Phone:
                 </label>
                 <div className="flex gap-2">
@@ -482,14 +486,14 @@ const AccountSettings: React.FC = () => {
                     <select
                       value={companyInfo.cellPhone.countryCode}
                       onChange={(e) => handlePhoneChange('companyInfo', 'cellPhone', 'countryCode', e.target.value)}
-                      className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors appearance-none pr-8"
+                      className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors appearance-none pr-8`}
                     >
                       <option value="US+1">US+1</option>
                       <option value="CA+1">CA+1</option>
                       <option value="UK+44">UK+44</option>
                     </select>
                     <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                      <svg className="w-4 h-4 text-secondary-medium" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className={`w-4 h-4 ${classes.text.secondary}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                       </svg>
                     </div>
@@ -498,7 +502,7 @@ const AccountSettings: React.FC = () => {
                     type="tel"
                     value={companyInfo.cellPhone.number}
                     onChange={(e) => handlePhoneChange('companyInfo', 'cellPhone', 'number', e.target.value)}
-                    className="flex-1 bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                    className={`flex-1 ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                   />
                 </div>
               </div>
@@ -515,12 +519,12 @@ const AccountSettings: React.FC = () => {
             }`}
           >
             <div className="flex items-center gap-3">
-              <FileText className="text-secondary-dark" size={20} />
-              <h2 className="text-xl font-semibold text-secondary-black">Additional Company Information</h2>
+              <FileText className={classes.text.primary} size={20} />
+              <h2 className={`text-xl font-semibold ${classes.text.black}`}>Additional Company Information</h2>
             </div>
             <ChevronDown 
               size={20} 
-              className={`text-secondary-medium transition-transform duration-200 ${
+              className={`${classes.text.secondary} transition-transform duration-200 ${
                 expandedSections.additionalInfo ? 'rotate-180' : ''
               }`}
             />
@@ -530,44 +534,44 @@ const AccountSettings: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in">
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   Website:*
                 </label>
                 <input
                   type="url"
                   value={additionalInfo.website}
                   onChange={(e) => handleAdditionalInfoChange('website', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 text-sm sm:text-base text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                  className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   Business/Industry:*
                 </label>
                 <input
                   type="text"
                   value={additionalInfo.businessIndustry}
                   onChange={(e) => handleAdditionalInfoChange('businessIndustry', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 text-sm sm:text-base text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                  className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   Company Type:*
                 </label>
                 <div className="relative">
                   <select
                     value={additionalInfo.companyType}
                     onChange={(e) => handleAdditionalInfoChange('companyType', e.target.value)}
-                    className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors appearance-none pr-8"
+                    className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors appearance-none pr-8`}
                   >
                     <option value="Public">Public</option>
                     <option value="Private">Private</option>
                   </select>
                   <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                    <svg className="w-4 h-4 text-secondary-medium" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className={`w-4 h-4 ${classes.text.secondary}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </div>
@@ -575,14 +579,14 @@ const AccountSettings: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   Structure:*
                 </label>
                 <div className="relative">
                   <select
                     value={additionalInfo.structure}
                     onChange={(e) => handleAdditionalInfoChange('structure', e.target.value)}
-                    className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors appearance-none pr-8"
+                    className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors appearance-none pr-8`}
                   >
                     <option value="LLC">LLC</option>
                     <option value="Corporation">Corporation</option>
@@ -590,7 +594,7 @@ const AccountSettings: React.FC = () => {
                     <option value="Sole Proprietorship">Sole Proprietorship</option>
                   </select>
                   <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                    <svg className="w-4 h-4 text-secondary-medium" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className={`w-4 h-4 ${classes.text.secondary}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </div>
@@ -598,59 +602,59 @@ const AccountSettings: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   International Securities Identification Number (ISIN):*
                 </label>
                 <input
                   type="text"
                   value={additionalInfo.isin}
                   onChange={(e) => handleAdditionalInfoChange('isin', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 text-sm sm:text-base text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                  className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   Stock Exchange:*
                 </label>
                 <input
                   type="text"
                   value={additionalInfo.stockExchange}
                   onChange={(e) => handleAdditionalInfoChange('stockExchange', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 text-sm sm:text-base text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                  className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   Market:*
                 </label>
                 <input
                   type="text"
                   value={additionalInfo.market}
                   onChange={(e) => handleAdditionalInfoChange('market', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 text-sm sm:text-base text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                  className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   Stock Symbol:*
                 </label>
                 <input
                   type="text"
                   value={additionalInfo.stockSymbol}
                   onChange={(e) => handleAdditionalInfoChange('stockSymbol', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 text-sm sm:text-base text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                  className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-secondary-dark mb-2">
+              <label className={`block text-sm font-medium ${classes.text.primary} mb-2`}>
                 ↑ Upload logo
               </label>
-              <div className="border-2 border-dashed border-secondary-light rounded-lg p-6 bg-secondary-light/10">
+              <div className={`border-2 border-dashed ${classes.border.default} rounded-lg p-6 ${classes.bg.tertiary}`}>
                 {additionalInfo.logo ? (
                   <div className="relative">
                     <img
@@ -667,8 +671,8 @@ const AccountSettings: React.FC = () => {
                   </div>
                 ) : (
                   <div className="text-center py-8">
-                    <Upload className="mx-auto text-secondary-medium mb-2" size={32} />
-                    <p className="text-sm text-secondary-medium mb-2">
+                    <Upload className={`mx-auto ${classes.text.secondary} mb-2`} size={32} />
+                    <p className={`text-sm ${classes.text.secondary} mb-2`}>
                       Click to upload or drag and drop
                     </p>
                     <input
@@ -680,14 +684,14 @@ const AccountSettings: React.FC = () => {
                     />
                     <label
                       htmlFor="logo-upload"
-                      className="inline-block bg-primary text-white px-4 py-2 rounded cursor-pointer hover:bg-primary-hover transition-colors text-sm"
+                      className={`inline-block ${theme === 'cs' ? 'bg-wire-accent hover:bg-wire-accent-hover' : 'bg-primary hover:bg-primary-hover'} text-black px-4 py-2 rounded cursor-pointer transition-colors text-sm`}
                     >
                       Choose File
                     </label>
                   </div>
                 )}
               </div>
-              <p className="text-xs text-secondary-medium mt-2">
+              <p className={`text-xs ${classes.text.secondary} mt-2`}>
                 Note: We accept jpg and png files, with a maximum allowed size of 256KB
               </p>
             </div>
@@ -703,12 +707,12 @@ const AccountSettings: React.FC = () => {
             }`}
           >
             <div className="flex items-center gap-3">
-              <User className="text-secondary-dark" size={20} />
-              <h2 className="text-xl font-semibold text-secondary-black">Primary Contact</h2>
+              <User className={classes.text.primary} size={20} />
+              <h2 className={`text-xl font-semibold ${classes.text.black}`}>Primary Contact</h2>
             </div>
             <ChevronDown 
               size={20} 
-              className={`text-secondary-medium transition-transform duration-200 ${
+              className={`${classes.text.secondary} transition-transform duration-200 ${
                 expandedSections.primaryContact ? 'rotate-180' : ''
               }`}
             />
@@ -718,117 +722,117 @@ const AccountSettings: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in">
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   First Name:*
                 </label>
                 <input
                   type="text"
                   value={primaryContact.firstName}
                   onChange={(e) => handlePrimaryContactChange('firstName', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 text-sm sm:text-base text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                  className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   Last Name:*
                 </label>
                 <input
                   type="text"
                   value={primaryContact.lastName}
                   onChange={(e) => handlePrimaryContactChange('lastName', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 text-sm sm:text-base text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                  className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   Position/Title:
                 </label>
                 <input
                   type="text"
                   value={primaryContact.positionTitle}
                   onChange={(e) => handlePrimaryContactChange('positionTitle', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 text-sm sm:text-base text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                  className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   Country:*
                 </label>
                 <input
                   type="text"
                   value={primaryContact.country}
                   onChange={(e) => handlePrimaryContactChange('country', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 text-sm sm:text-base text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                  className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   Address (no p.o boxes):*
                 </label>
                 <input
                   type="text"
                   value={primaryContact.address}
                   onChange={(e) => handlePrimaryContactChange('address', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 text-sm sm:text-base text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                  className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   Address 2:
                 </label>
                 <input
                   type="text"
                   value={primaryContact.address2}
                   onChange={(e) => handlePrimaryContactChange('address2', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 text-sm sm:text-base text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                  className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                 />
               </div>
             </div>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   City:*
                 </label>
                 <input
                   type="text"
                   value={primaryContact.city}
                   onChange={(e) => handlePrimaryContactChange('city', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 text-sm sm:text-base text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                  className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   State/Province:
                 </label>
                 <input
                   type="text"
                   value={primaryContact.stateProvince}
                   onChange={(e) => handlePrimaryContactChange('stateProvince', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 text-sm sm:text-base text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                  className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   Postal Code:
                 </label>
                 <input
                   type="text"
                   value={primaryContact.postalCode}
                   onChange={(e) => handlePrimaryContactChange('postalCode', e.target.value)}
-                  className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 text-sm sm:text-base text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                  className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   Primary Contact Phone:*
                 </label>
                 <div className="flex gap-2">
@@ -836,14 +840,14 @@ const AccountSettings: React.FC = () => {
                     <select
                       value={primaryContact.primaryPhone.countryCode}
                       onChange={(e) => handlePhoneChange('primaryContact', 'primaryPhone', 'countryCode', e.target.value)}
-                      className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors appearance-none pr-8"
+                      className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors appearance-none pr-8`}
                     >
                       <option value="US+1">US+1</option>
                       <option value="CA+1">CA+1</option>
                       <option value="UK+44">UK+44</option>
                     </select>
                     <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                      <svg className="w-4 h-4 text-secondary-medium" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className={`w-4 h-4 ${classes.text.secondary}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                       </svg>
                     </div>
@@ -852,13 +856,13 @@ const AccountSettings: React.FC = () => {
                     type="tel"
                     value={primaryContact.primaryPhone.number}
                     onChange={(e) => handlePhoneChange('primaryContact', 'primaryPhone', 'number', e.target.value)}
-                    className="flex-1 bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                    className={`flex-1 ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-dark mb-1">
+                <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                   Cell Phone:
                 </label>
                 <div className="flex gap-2">
@@ -866,14 +870,14 @@ const AccountSettings: React.FC = () => {
                     <select
                       value={primaryContact.cellPhone.countryCode}
                       onChange={(e) => handlePhoneChange('primaryContact', 'cellPhone', 'countryCode', e.target.value)}
-                      className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors appearance-none pr-8"
+                      className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors appearance-none pr-8`}
                     >
                       <option value="US+1">US+1</option>
                       <option value="CA+1">CA+1</option>
                       <option value="UK+44">UK+44</option>
                     </select>
                     <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                      <svg className="w-4 h-4 text-secondary-medium" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className={`w-4 h-4 ${classes.text.secondary}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                       </svg>
                     </div>
@@ -882,7 +886,7 @@ const AccountSettings: React.FC = () => {
                     type="tel"
                     value={primaryContact.cellPhone.number}
                     onChange={(e) => handlePhoneChange('primaryContact', 'cellPhone', 'number', e.target.value)}
-                    className="flex-1 bg-secondary-light/30 border border-secondary-light rounded p-2 text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                    className={`flex-1 ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                   />
                 </div>
               </div>
@@ -891,7 +895,7 @@ const AccountSettings: React.FC = () => {
           )}
         </Card>
 
-        <div className="pt-6 border-t border-secondary-light flex justify-end">
+        <div className={`pt-6 border-t ${classes.border.default} flex justify-end`}>
           <Button onClick={handleSave} size="lg" className="min-w-[120px]">
             Save
           </Button>
@@ -901,14 +905,14 @@ const AccountSettings: React.FC = () => {
       {/* Change Email Modal */}
       {showEmailModal && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 sm:p-6">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full animate-fade-in max-h-[90vh] overflow-y-auto">
+          <div className={`${classes.bg.card} rounded-lg shadow-xl max-w-md w-full animate-fade-in max-h-[90vh] overflow-y-auto`}>
             <div className="p-4 sm:p-6">
               <div className="flex items-center justify-between mb-4 sm:mb-6">
                 <div className="flex items-center gap-2 sm:gap-3">
-                  <div className="p-1.5 sm:p-2 bg-primary-light rounded-lg">
-                    <Mail className="text-primary" size={18} />
+                  <div className={`p-1.5 sm:p-2 ${classes.icon.container} rounded-lg`}>
+                    <Mail className={theme === 'cs' ? 'text-wire-accent' : 'text-primary'} size={18} />
                   </div>
-                  <h2 className="text-lg sm:text-xl font-bold text-secondary-black">Change Email</h2>
+                  <h2 className={`text-lg sm:text-xl font-bold ${classes.text.black}`}>Change Email</h2>
                 </div>
                 <button
                   onClick={() => {
@@ -916,49 +920,49 @@ const AccountSettings: React.FC = () => {
                     setEmailError('');
                     setEmailFormData({ currentEmail: emailFormData.currentEmail, newEmail: '', confirmEmail: '' });
                   }}
-                  className="p-2 hover:bg-secondary-light rounded-lg transition-colors flex-shrink-0"
+                  className={`p-2 ${classes.bg.secondary} hover:opacity-80 rounded-lg transition-colors flex-shrink-0`}
                   aria-label="Close modal"
                 >
-                  <X size={18} className="text-secondary-medium" />
+                  <X size={18} className={classes.text.secondary} />
                 </button>
               </div>
 
               <form onSubmit={handleEmailSubmit} className="space-y-3 sm:space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-secondary-dark mb-1">
+                  <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                     Current Email
                   </label>
                   <input
                     type="email"
                     value={emailFormData.currentEmail}
                     disabled
-                    className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 text-sm sm:text-base text-secondary-medium cursor-not-allowed"
+                    className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.secondary} cursor-not-allowed`}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-secondary-dark mb-1">
+                  <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                     New Email *
                   </label>
                   <input
                     type="email"
                     value={emailFormData.newEmail}
                     onChange={(e) => setEmailFormData({ ...emailFormData, newEmail: e.target.value })}
-                    className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 text-sm sm:text-base text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                    className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                     placeholder="Enter new email address"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-secondary-dark mb-1">
+                  <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                     Confirm New Email *
                   </label>
                   <input
                     type="email"
                     value={emailFormData.confirmEmail}
                     onChange={(e) => setEmailFormData({ ...emailFormData, confirmEmail: e.target.value })}
-                    className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 text-sm sm:text-base text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                    className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                     placeholder="Confirm new email address"
                     required
                   />
@@ -1001,14 +1005,14 @@ const AccountSettings: React.FC = () => {
       {/* Change Password Modal */}
       {showPasswordModal && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 sm:p-6">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full animate-fade-in max-h-[90vh] overflow-y-auto">
+          <div className={`${classes.bg.card} rounded-lg shadow-xl max-w-md w-full animate-fade-in max-h-[90vh] overflow-y-auto`}>
             <div className="p-4 sm:p-6">
               <div className="flex items-center justify-between mb-4 sm:mb-6">
                 <div className="flex items-center gap-2 sm:gap-3">
-                  <div className="p-1.5 sm:p-2 bg-primary-light rounded-lg">
-                    <Key className="text-primary" size={18} />
+                  <div className={`p-1.5 sm:p-2 ${classes.icon.container} rounded-lg`}>
+                    <Key className={theme === 'cs' ? 'text-wire-accent' : 'text-primary'} size={18} />
                   </div>
-                  <h2 className="text-lg sm:text-xl font-bold text-secondary-black">Change Password</h2>
+                  <h2 className={`text-lg sm:text-xl font-bold ${classes.text.black}`}>Change Password</h2>
                 </div>
                 <button
                   onClick={() => {
@@ -1016,16 +1020,16 @@ const AccountSettings: React.FC = () => {
                     setPasswordError('');
                     setPasswordFormData({ currentPassword: '', newPassword: '', confirmPassword: '' });
                   }}
-                  className="p-2 hover:bg-secondary-light rounded-lg transition-colors flex-shrink-0"
+                  className={`p-2 ${classes.bg.secondary} hover:opacity-80 rounded-lg transition-colors flex-shrink-0`}
                   aria-label="Close modal"
                 >
-                  <X size={18} className="text-secondary-medium" />
+                  <X size={18} className={classes.text.secondary} />
                 </button>
               </div>
 
               <form onSubmit={handlePasswordSubmit} className="space-y-3 sm:space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-secondary-dark mb-1">
+                  <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                     Current Password *
                   </label>
                   <div className="relative">
@@ -1033,14 +1037,14 @@ const AccountSettings: React.FC = () => {
                       type={showCurrentPassword ? 'text' : 'password'}
                       value={passwordFormData.currentPassword}
                       onChange={(e) => setPasswordFormData({ ...passwordFormData, currentPassword: e.target.value })}
-                      className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 pr-9 sm:pr-10 text-sm sm:text-base text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                      className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 pr-9 sm:pr-10 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                       placeholder="Enter current password"
                       required
                     />
                     <button
                       type="button"
                       onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-                      className="absolute right-2 top-1/2 transform -translate-y-1/2 text-secondary-medium hover:text-secondary-dark transition-colors"
+                      className={`absolute right-2 top-1/2 transform -translate-y-1/2 ${classes.text.secondary} hover:opacity-80 transition-colors`}
                       aria-label={showCurrentPassword ? 'Hide password' : 'Show password'}
                     >
                       {showCurrentPassword ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -1049,7 +1053,7 @@ const AccountSettings: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-secondary-dark mb-1">
+                  <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                     New Password *
                   </label>
                   <div className="relative">
@@ -1057,14 +1061,14 @@ const AccountSettings: React.FC = () => {
                       type={showNewPassword ? 'text' : 'password'}
                       value={passwordFormData.newPassword}
                       onChange={(e) => setPasswordFormData({ ...passwordFormData, newPassword: e.target.value })}
-                      className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 pr-9 sm:pr-10 text-sm sm:text-base text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                      className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 pr-9 sm:pr-10 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                       placeholder="Enter new password (min. 8 characters)"
                       required
                     />
                     <button
                       type="button"
                       onClick={() => setShowNewPassword(!showNewPassword)}
-                      className="absolute right-2 top-1/2 transform -translate-y-1/2 text-secondary-medium hover:text-secondary-dark transition-colors"
+                      className={`absolute right-2 top-1/2 transform -translate-y-1/2 ${classes.text.secondary} hover:opacity-80 transition-colors`}
                       aria-label={showNewPassword ? 'Hide password' : 'Show password'}
                     >
                       {showNewPassword ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -1073,7 +1077,7 @@ const AccountSettings: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-secondary-dark mb-1">
+                  <label className={`block text-sm font-medium ${classes.text.primary} mb-1`}>
                     Confirm New Password *
                   </label>
                   <div className="relative">
@@ -1081,14 +1085,14 @@ const AccountSettings: React.FC = () => {
                       type={showConfirmPassword ? 'text' : 'password'}
                       value={passwordFormData.confirmPassword}
                       onChange={(e) => setPasswordFormData({ ...passwordFormData, confirmPassword: e.target.value })}
-                      className="w-full bg-secondary-light/30 border border-secondary-light rounded p-2 sm:p-2.5 pr-9 sm:pr-10 text-sm sm:text-base text-secondary-black focus:border-primary focus:outline-none transition-colors"
+                      className={`w-full ${classes.bg.tertiary} border ${classes.border.default} rounded p-2 sm:p-2.5 pr-9 sm:pr-10 text-sm sm:text-base ${classes.text.primary} ${theme === 'cs' ? 'focus:border-wire-accent' : 'focus:border-primary'} focus:outline-none transition-colors`}
                       placeholder="Confirm new password"
                       required
                     />
                     <button
                       type="button"
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      className="absolute right-2 top-1/2 transform -translate-y-1/2 text-secondary-medium hover:text-secondary-dark transition-colors"
+                      className={`absolute right-2 top-1/2 transform -translate-y-1/2 ${classes.text.secondary} hover:opacity-80 transition-colors`}
                       aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
                     >
                       {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}

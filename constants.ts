@@ -227,7 +227,7 @@ export const MOCK_PROMOS: PromoCode[] = [
     discount: '20%',
     remaining: 45,
     dateIssued: '2024-03-15',
-    expirationDate: '2024-06-30',
+    expirationDate: '2025-06-30',
   },
   {
     code: 'BLOCKCHAIN25',
@@ -236,7 +236,7 @@ export const MOCK_PROMOS: PromoCode[] = [
     discount: '15%',
     remaining: 12,
     dateIssued: '2024-01-10',
-    expirationDate: '2024-12-31',
+    expirationDate: '2025-12-31',
   },
   {
     code: 'WIRE2024',
@@ -245,7 +245,7 @@ export const MOCK_PROMOS: PromoCode[] = [
     discount: '25%',
     remaining: 8,
     dateIssued: '2024-02-01',
-    expirationDate: '2024-05-31',
+    expirationDate: '2025-05-31',
   },
   {
     code: 'NEWCLIENT50',
@@ -254,7 +254,7 @@ export const MOCK_PROMOS: PromoCode[] = [
     discount: '50%',
     remaining: 100,
     dateIssued: '2024-04-01',
-    expirationDate: '2024-07-31',
+    expirationDate: '2025-07-31',
   },
   {
     code: 'SUMMER2024',
@@ -263,7 +263,7 @@ export const MOCK_PROMOS: PromoCode[] = [
     discount: '30%',
     remaining: 23,
     dateIssued: '2024-05-01',
-    expirationDate: '2024-08-31',
+    expirationDate: '2025-08-31',
   },
   {
     code: 'VIP2024',
@@ -272,7 +272,7 @@ export const MOCK_PROMOS: PromoCode[] = [
     discount: '10%',
     remaining: 5,
     dateIssued: '2024-01-05',
-    expirationDate: '2024-12-31',
+    expirationDate: '2025-12-31',
   },
   {
     code: 'LAUNCH2024',
@@ -281,7 +281,7 @@ export const MOCK_PROMOS: PromoCode[] = [
     discount: '35%',
     remaining: 15,
     dateIssued: '2024-03-20',
-    expirationDate: '2024-06-30',
+    expirationDate: '2025-06-30',
   },
 ];
 

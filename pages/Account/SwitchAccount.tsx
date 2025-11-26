@@ -2,6 +2,8 @@ import { Pencil } from "lucide-react";
 import React from "react";
 import { Button } from "../../components/ui/Button";
 import { Card } from "../../components/ui/Card";
+import { useTheme } from "../../contexts/ThemeContext";
+import { useThemeClasses } from "../../hooks/useThemeClasses";
 
 interface Account {
   id: string;
@@ -31,24 +33,44 @@ const ACCOUNTS: Account[] = [
 const SwitchAccount: React.FC = () => {
   const primaryAccount = ACCOUNTS.find((acc) => acc.isPrimary);
   const secondaryAccounts = ACCOUNTS.filter((acc) => !acc.isPrimary);
+  const classes = useThemeClasses();
+  const { theme, colorMode } = useTheme();
 
   return (
     <div className="max-w-4xl mx-auto p-4 sm:p-6">
       <div className="flex justify-between items-center mb-4 sm:mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold text-secondary-black">
+        <h1 className={`text-xl sm:text-2xl font-bold ${classes.text.black}`}>
           Switch Account
         </h1>
       </div>
 
       {primaryAccount && (
         <div className="mb-6">
-          <div className="bg-primary text-white px-4 py-2 rounded-t-lg font-semibold text-sm text-center">
+          <div
+            className={`px-4 py-2 rounded-t-lg font-semibold text-sm text-center ${
+              theme === "cs"
+                ? colorMode === "dark"
+                  ? "bg-cs-accent text-black"
+                  : "bg-cs-accent text-black"
+                : colorMode === "dark"
+                ? "bg-primary-dark text-white"
+                : "bg-primary text-white"
+            }`}
+          >
             Main Account
           </div>
           <Card variant="compact" className="rounded-t-none border-t-0">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-3 flex-1 min-w-0">
-                <div className="w-12 h-12 bg-primary rounded flex items-center justify-center text-white flex-shrink-0">
+                <div
+                  className={`w-12 h-12 rounded flex items-center justify-center text-white flex-shrink-0 ${
+                    theme === "cs"
+                      ? "bg-cs-accent"
+                      : colorMode === "dark"
+                      ? "bg-primary-dark"
+                      : "bg-primary"
+                  }`}
+                >
                   <svg
                     width="24"
                     height="24"
@@ -61,13 +83,19 @@ const SwitchAccount: React.FC = () => {
                   </svg>
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h2 className="text-base font-bold text-secondary-black truncate">
+                  <h2
+                    className={`text-base font-bold truncate ${classes.text.black}`}
+                  >
                     {primaryAccount.name}
                   </h2>
-                  <span className="text-primary font-medium text-sm">
+                  <span
+                    className={`font-medium text-sm ${
+                      theme === "cs" ? "text-cs-accent" : "text-primary"
+                    }`}
+                  >
                     Primary
                   </span>
-                  <div className="text-xs text-secondary-medium mt-1">
+                  <div className={`text-xs mt-1 ${classes.text.secondary}`}>
                     <p className="truncate">
                       Company: {primaryAccount.company}
                     </p>
@@ -76,7 +104,13 @@ const SwitchAccount: React.FC = () => {
                 </div>
               </div>
               <button
-                className="flex items-center gap-1.5 h-8 px-3 rounded text-xs font-medium text-secondary-dark hover:text-primary hover:bg-primary-light/30 transition-colors border border-transparent hover:border-primary-light flex-shrink-0"
+                className={`flex items-center gap-1.5 h-8 px-3 rounded text-xs font-medium transition-colors border border-transparent flex-shrink-0 ${
+                  classes.text.primary
+                } ${
+                  theme === "cs"
+                    ? "hover:text-cs-accent hover:bg-cs-accent/20 hover:border-cs-accent/20"
+                    : "hover:text-primary hover:bg-primary-light/30 hover:border-primary-light"
+                }`}
                 aria-label="Edit account"
               >
                 <Pencil size={14} />
@@ -89,7 +123,17 @@ const SwitchAccount: React.FC = () => {
 
       {secondaryAccounts.length > 0 ? (
         <div>
-          <div className="bg-secondary-dark text-white px-4 py-2 rounded-t-lg font-semibold text-sm text-center mb-0">
+          <div
+            className={`px-4 py-2 rounded-t-lg font-semibold text-sm text-center mb-0 ${
+              theme === "cs"
+                ? colorMode === "dark"
+                  ? "bg-wire-bg-light text-wire-text"
+                  : "bg-wire-bg text-wire-text"
+                : colorMode === "dark"
+                ? "bg-gray-700 text-white"
+                : "bg-secondary-dark text-white"
+            }`}
+          >
             Secondary Accounts
           </div>
           <div className="space-y-2">
@@ -106,7 +150,9 @@ const SwitchAccount: React.FC = () => {
               >
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3 flex-1 min-w-0">
-                    <div className="w-12 h-12 bg-secondary-medium rounded flex items-center justify-center text-white flex-shrink-0">
+                    <div
+                      className={`w-12 h-12 rounded flex items-center justify-center text-white flex-shrink-0 ${classes.bg.secondary}`}
+                    >
                       <svg
                         width="24"
                         height="24"
@@ -119,13 +165,17 @@ const SwitchAccount: React.FC = () => {
                       </svg>
                     </div>
                     <div className="min-w-0 flex-1">
-                      <h2 className="text-base font-bold text-secondary-black truncate">
+                      <h2
+                        className={`text-base font-bold truncate ${classes.text.black}`}
+                      >
                         {account.name}
                       </h2>
-                      <span className="text-secondary-medium font-medium text-sm">
+                      <span
+                        className={`font-medium text-sm ${classes.text.secondary}`}
+                      >
                         Secondary
                       </span>
-                      <div className="text-xs text-secondary-medium mt-1">
+                      <div className={`text-xs mt-1 ${classes.text.secondary}`}>
                         <p className="truncate">Company: {account.company}</p>
                         <p>Country: {account.country}</p>
                       </div>
@@ -136,7 +186,13 @@ const SwitchAccount: React.FC = () => {
                       Switch
                     </Button>
                     <button
-                      className="p-2 rounded-lg text-secondary-medium hover:text-primary hover:bg-primary-light transition-all border border-transparent hover:border-primary/20"
+                      className={`p-2 rounded-lg transition-all border border-transparent ${
+                        classes.text.secondary
+                      } ${
+                        theme === "cs"
+                          ? "hover:text-cs-accent hover:bg-cs-accent/20 hover:border-cs-accent/20"
+                          : "hover:text-primary hover:bg-primary-light hover:border-primary/20"
+                      }`}
                       title={`Edit ${account.name} account`}
                       aria-label={`Edit ${account.name} account`}
                     >
@@ -150,7 +206,7 @@ const SwitchAccount: React.FC = () => {
         </div>
       ) : (
         <Card className="text-center py-10">
-          <p className="text-secondary-medium">No other accounts linked.</p>
+          <p className={classes.text.secondary}>No other accounts linked.</p>
         </Card>
       )}
     </div>

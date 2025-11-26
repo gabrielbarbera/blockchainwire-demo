@@ -1,13 +1,53 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { MOCK_RELEASES, CIRCUITS } from '../../constants';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { useNavigate } from 'react-router-dom';
-import { List, ChevronDown, Clock, Edit, Trash2 } from 'lucide-react';
+import { useThemeClasses } from '../../hooks/useThemeClasses';
+import { useTheme } from '../../contexts/ThemeContext';
+import { List, Clock, Edit, Trash2 } from 'lucide-react';
 import { Release } from '../../types';
 
 const ListReleases: React.FC = () => {
   const navigate = useNavigate();
+  const classes = useThemeClasses();
+  const { theme, colorMode } = useTheme();
+  const [selectedStatus, setSelectedStatus] = useState<string>('all');
+  const [selectedCircuit, setSelectedCircuit] = useState<string>('all');
+  const [selectedAuthor, setSelectedAuthor] = useState<string>('all');
+
+  // Get unique authors and circuit names for filters
+  const uniqueAuthors = useMemo(() => {
+    const authors = Array.from(new Set(MOCK_RELEASES.map(r => r.author)));
+    return authors.sort();
+  }, []);
+
+  const uniqueCircuits = useMemo(() => {
+    const circuits = Array.from(new Set(MOCK_RELEASES.map(r => r.circuitName)));
+    return circuits.sort();
+  }, []);
+
+  // Filter releases based on selected filters
+  const filteredReleases = useMemo(() => {
+    return MOCK_RELEASES.filter(release => {
+      // Filter by status
+      if (selectedStatus !== 'all' && release.status !== selectedStatus) {
+        return false;
+      }
+
+      // Filter by circuit
+      if (selectedCircuit !== 'all' && release.circuitName !== selectedCircuit) {
+        return false;
+      }
+
+      // Filter by author
+      if (selectedAuthor !== 'all' && release.author !== selectedAuthor) {
+        return false;
+      }
+
+      return true;
+    });
+  }, [selectedStatus, selectedCircuit, selectedAuthor]);
 
   const getCircuitIdFromName = (circuitName: string): string | null => {
     const circuitMap: Record<string, string> = {
@@ -66,55 +106,117 @@ const ListReleases: React.FC = () => {
   };
 
   const getCircuitBadgeColor = (name: string) => {
-    if (name.includes('Global')) return 'bg-primary text-white';
-    if (name === 'Premium') return 'bg-primary text-white';
-    if (name === 'Pro') return 'bg-primary/80 text-white';
-    if (name === 'Elite') return 'bg-primary/70 text-white';
-    if (name === 'Basic SEO') return 'bg-primary-light text-secondary-black';
-    return 'bg-secondary-medium text-white';
+    const isDark = colorMode === 'dark';
+    const isCS = theme === 'cs';
+    
+    if (name.includes('Global') || name === 'Premium') {
+      return isCS 
+        ? 'bg-wire-accent text-black' 
+        : isDark 
+          ? 'bg-primary-dark text-white' 
+          : 'bg-primary text-white';
+    }
+    if (name === 'Pro') {
+      return isCS 
+        ? 'bg-wire-accent/80 text-black' 
+        : isDark 
+          ? 'bg-primary-dark/80 text-white' 
+          : 'bg-primary/80 text-white';
+    }
+    if (name === 'Elite') {
+      return isCS 
+        ? 'bg-wire-accent/70 text-black' 
+        : isDark 
+          ? 'bg-primary-dark/70 text-white' 
+          : 'bg-primary/70 text-white';
+    }
+    if (name === 'Basic SEO') {
+      return isCS
+        ? isDark ? 'bg-wire-accent/20 text-wire-text' : 'bg-wire-accent/10 text-wire-text-dark'
+        : isDark ? 'bg-primary-dark/20 text-gray-200' : 'bg-primary-light text-secondary-black';
+    }
+    return isCS
+      ? isDark ? 'bg-wire-bg-light text-wire-text' : 'bg-wire-bg-light text-wire-text-dark'
+      : isDark ? 'bg-gray-600 text-white' : 'bg-secondary-medium text-white';
   };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 animate-fade-in">
       {/* Header Section */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 sm:mb-8 gap-4">
-        <div className="flex items-center gap-2 text-secondary-dark">
-          <div className="p-1.5 sm:p-2 bg-primary-light rounded-lg">
-            <List className="text-primary" size={18} />
+        <div className={`flex items-center gap-2 ${classes.text.secondary}`}>
+          <div className={`p-1.5 sm:p-2 rounded-lg ${classes.icon.container}`}>
+            <List className={theme === 'cs' ? 'text-wire-accent' : 'text-primary'} size={18} />
           </div>
           <div>
-            <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-secondary-black">Press Releases</h1>
-            <p className="text-xs sm:text-sm text-secondary-medium">{MOCK_RELEASES.length} total releases</p>
+            <h1 className={`text-lg sm:text-xl lg:text-2xl font-bold ${classes.text.black}`}>Press Releases</h1>
+            <p className={`text-xs sm:text-sm ${classes.text.secondary}`}>
+              {filteredReleases.length} {filteredReleases.length === 1 ? 'release' : 'releases'}
+              {(selectedStatus !== 'all' || selectedCircuit !== 'all' || selectedAuthor !== 'all') && (
+                <span className="ml-1">(filtered from {MOCK_RELEASES.length} total)</span>
+              )}
+            </p>
           </div>
         </div>
 
         <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 w-full md:w-auto">
           <div className="grid grid-cols-3 sm:flex gap-2 sm:gap-3 w-full sm:w-auto">
             <div className="w-full sm:w-36 lg:w-44">
-              <div className="bg-white rounded-lg border-2 border-secondary-light shadow-sm cursor-pointer hover:border-primary transition-colors group">
-                <div className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-2.5">
-                  <span className="text-secondary-black text-xs sm:text-sm font-medium truncate">All</span>
-                  <ChevronDown size={14} className="sm:w-4 sm:h-4 text-secondary-medium group-hover:text-primary transition-colors flex-shrink-0"/>
-                </div>
-              </div>
+              <select
+                value={selectedStatus}
+                onChange={(e) => setSelectedStatus(e.target.value)}
+                className={`w-full border rounded-lg shadow-sm px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-medium transition-all duration-200 focus:outline-none appearance-none cursor-pointer bg-no-repeat bg-right pr-8 sm:pr-10 ${classes.border.default} ${classes.bg.card} ${classes.text.black} ${theme === 'cs' ? 'focus:border-wire-accent hover:shadow-md' : 'focus:border-primary hover:shadow-md'}`}
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='${colorMode === 'dark' ? (theme === 'cs' ? '%23ffffff' : '%239ca3af') : (theme === 'cs' ? '%23000000' : '%236b7280')}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'%3E%3C/path%3E%3C/svg%3E")`,
+                  backgroundPosition: 'right 0.75rem center',
+                  backgroundSize: '14px 14px'
+                }}
+              >
+                <option value="all">All Status</option>
+                <option value="Draft">Draft</option>
+                <option value="Scheduled">Scheduled</option>
+                <option value="Published">Published</option>
+              </select>
             </div>
 
             <div className="w-full sm:w-36 lg:w-44">
-              <div className="bg-white rounded-lg border-2 border-secondary-light shadow-sm cursor-pointer hover:border-primary transition-colors group">
-                <div className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-2.5">
-                  <span className="text-secondary-black text-xs sm:text-sm font-medium truncate">All</span>
-                  <ChevronDown size={14} className="sm:w-4 sm:h-4 text-secondary-medium group-hover:text-primary transition-colors flex-shrink-0"/>
-                </div>
-              </div>
+              <select
+                value={selectedCircuit}
+                onChange={(e) => setSelectedCircuit(e.target.value)}
+                className={`w-full border rounded-lg shadow-sm px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-medium transition-all duration-200 focus:outline-none appearance-none cursor-pointer bg-no-repeat bg-right pr-8 sm:pr-10 ${classes.border.default} ${classes.bg.card} ${classes.text.black} ${theme === 'cs' ? 'focus:border-wire-accent hover:shadow-md' : 'focus:border-primary hover:shadow-md'}`}
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='${colorMode === 'dark' ? (theme === 'cs' ? '%23ffffff' : '%239ca3af') : (theme === 'cs' ? '%23000000' : '%236b7280')}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'%3E%3C/path%3E%3C/svg%3E")`,
+                  backgroundPosition: 'right 0.75rem center',
+                  backgroundSize: '14px 14px'
+                }}
+              >
+                <option value="all">All Circuits</option>
+                {uniqueCircuits.map((circuit) => (
+                  <option key={circuit} value={circuit}>
+                    {circuit}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div className="w-full sm:w-36 lg:w-44">
-              <div className="bg-white rounded-lg border-2 border-secondary-light shadow-sm cursor-pointer hover:border-primary transition-colors group">
-                <div className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-2.5">
-                  <span className="text-secondary-black text-xs sm:text-sm font-medium truncate">Blockchain Wire</span>
-                  <ChevronDown size={14} className="sm:w-4 sm:h-4 text-secondary-medium group-hover:text-primary transition-colors flex-shrink-0"/>
-                </div>
-              </div>
+              <select
+                value={selectedAuthor}
+                onChange={(e) => setSelectedAuthor(e.target.value)}
+                className={`w-full border rounded-lg shadow-sm px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-medium transition-all duration-200 focus:outline-none appearance-none cursor-pointer bg-no-repeat bg-right pr-8 sm:pr-10 ${classes.border.default} ${classes.bg.card} ${classes.text.black} ${theme === 'cs' ? 'focus:border-wire-accent hover:shadow-md' : 'focus:border-primary hover:shadow-md'}`}
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='${colorMode === 'dark' ? (theme === 'cs' ? '%23ffffff' : '%239ca3af') : (theme === 'cs' ? '%23000000' : '%236b7280')}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'%3E%3C/path%3E%3C/svg%3E")`,
+                  backgroundPosition: 'right 0.75rem center',
+                  backgroundSize: '14px 14px'
+                }}
+              >
+                <option value="all">All Authors</option>
+                {uniqueAuthors.map((author) => (
+                  <option key={author} value={author}>
+                    {author}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 
@@ -129,34 +231,42 @@ const ListReleases: React.FC = () => {
 
       {/* Releases List */}
       <div className="space-y-4">
-        {MOCK_RELEASES.map((release) => (
+        {filteredReleases.length === 0 ? (
+          <Card>
+            <div className={`text-center py-8 sm:py-12 ${classes.text.secondary}`}>
+              <p className="text-sm sm:text-base font-medium mb-2">No releases found</p>
+              <p className="text-xs sm:text-sm">Try adjusting your filters to see more results.</p>
+            </div>
+          </Card>
+        ) : (
+          filteredReleases.map((release) => (
           <Card key={release.id} hover className="group">
             <div className="flex flex-col lg:flex-row lg:items-start gap-4">
               {/* Left Section - Main Content */}
               <div className="flex-1 min-w-0">
                 {/* Header Row - Status and Circuit */}
                 <div className="flex flex-wrap items-center gap-2 mb-3">
-                  <span className="bg-secondary-medium/20 text-secondary-black py-1 px-3 rounded-lg font-medium text-xs">
+                  <span className={`py-1 px-3 rounded-lg font-medium text-xs ${classes.bg.tertiary} ${classes.text.primary}`}>
                     {release.status}
                   </span>
-                  <span className={`${getCircuitBadgeColor(release.circuitName)} text-white px-3 py-1 rounded-lg font-semibold text-xs`}>
+                  <span className={`${getCircuitBadgeColor(release.circuitName)} px-3 py-1 rounded-lg font-semibold text-xs`}>
                     {release.circuitName}
                   </span>
                 </div>
 
                 {/* Headline */}
-                <h3 className="text-base sm:text-lg font-bold text-secondary-black mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+                <h3 className={`text-base sm:text-lg font-bold mb-2 line-clamp-2 transition-colors ${classes.text.black} ${theme === 'cs' ? 'group-hover:text-wire-accent' : 'group-hover:text-primary'}`}>
                   {release.headline || 'No Headline'}
                 </h3>
 
                 {/* Meta Information */}
-                <div className="flex flex-wrap items-center gap-4 text-sm text-secondary-medium">
+                <div className={`flex flex-wrap items-center gap-4 text-sm ${classes.text.secondary}`}>
                   <div className="flex items-center gap-1.5">
                     <Clock size={14} />
                     <span>{release.date || 'not selected'}</span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <span className="text-secondary-dark font-medium">{release.author}</span>
+                    <span className={`font-medium ${classes.text.primary}`}>{release.author}</span>
                   </div>
                 </div>
               </div>
@@ -165,14 +275,14 @@ const ListReleases: React.FC = () => {
               <div className="flex items-center gap-2 sm:gap-2 lg:flex-col lg:items-end lg:justify-start pt-1 flex-shrink-0">
                 <button 
                   onClick={() => handleEdit(release)}
-                  className="p-2 rounded-lg text-secondary-medium hover:text-primary hover:bg-primary-light transition-all border border-transparent hover:border-primary/20"
+                  className={`p-2 rounded-lg transition-all border border-transparent ${classes.text.secondary} ${theme === 'cs' ? 'hover:text-wire-accent hover:bg-wire-accent/20 hover:border-wire-accent/20' : 'hover:text-primary hover:bg-primary-light hover:border-primary/20'}`}
                   title="Edit release"
                   aria-label="Edit release"
                 >
                   <Edit size={18} />
                 </button>
                 <button 
-                  className="p-2 rounded-lg text-secondary-medium hover:text-red-500 hover:bg-red-50 transition-all border border-transparent hover:border-red-200"
+                  className={`p-2 rounded-lg transition-all border border-transparent ${classes.text.secondary} hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 hover:border-red-200 dark:hover:border-red-800`}
                   title="Delete release"
                   aria-label="Delete release"
                 >
@@ -181,7 +291,8 @@ const ListReleases: React.FC = () => {
               </div>
             </div>
           </Card>
-        ))}
+          ))
+        )}
       </div>
     </div>
   );

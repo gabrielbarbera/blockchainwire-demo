@@ -1,25 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { CheckCircle } from 'lucide-react';
-import { ReleaseFormData } from '../../types';
-import { useLocation } from 'react-router-dom';
-import DistributionStep from './steps/DistributionStep';
-import ContentStep from './steps/ContentStep';
-import OptimizationStep from './steps/OptimizationStep';
-import ScheduleStep from './steps/ScheduleStep';
-import ReviewStep from './steps/ReviewStep';
-import CheckoutStep from './steps/CheckoutStep';
+import { CheckCircle } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { useTheme } from "../../contexts/ThemeContext";
+import { useThemeClasses } from "../../hooks/useThemeClasses";
+import { ReleaseFormData } from "../../types";
+import CheckoutStep from "./steps/CheckoutStep";
+import ContentStep from "./steps/ContentStep";
+import DistributionStep from "./steps/DistributionStep";
+import OptimizationStep from "./steps/OptimizationStep";
+import ReviewStep from "./steps/ReviewStep";
+import ScheduleStep from "./steps/ScheduleStep";
 
 const STEPS = [
-  { id: 1, label: 'Distribution' },
-  { id: 2, label: 'Content' },
-  { id: 3, label: 'Optimization' },
-  { id: 4, label: 'Schedule' },
-  { id: 5, label: 'Review' },
-  { id: 6, label: 'Checkout' },
+  { id: 1, label: "Distribution" },
+  { id: 2, label: "Content" },
+  { id: 3, label: "Optimization" },
+  { id: 4, label: "Schedule" },
+  { id: 5, label: "Review" },
+  { id: 6, label: "Checkout" },
 ];
 
 const NewRelease: React.FC = () => {
   const location = useLocation();
+  const classes = useThemeClasses();
+  const { theme, colorMode } = useTheme();
   const editData = location.state as {
     releaseId?: string;
     circuitId?: string | null;
@@ -34,26 +38,26 @@ const NewRelease: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<ReleaseFormData>({
     circuitId: editData?.circuitId || null,
-    headline: editData?.headline || '',
-    subHeadline: '',
-    location: '',
-    content: '',
+    headline: editData?.headline || "",
+    subHeadline: "",
+    location: "",
+    content: "",
     contact: {
-      displayPreference: 'full',
-      firstName: 'Alex',
-      lastName: 'Morgan',
-      jobTitle: 'Marketing Director',
-      company: 'TechVision Inc',
-      phone: '(555) 123-4567',
-      email: 'alex.morgan@techvision.com',
-      additional: '(555) 987-6543',
-      website: 'www.techvision.com',
+      displayPreference: "full",
+      firstName: "Alex",
+      lastName: "Morgan",
+      jobTitle: "Marketing Director",
+      company: "TechVision Inc",
+      phone: "(555) 123-4567",
+      email: "alex.morgan@techvision.com",
+      additional: "(555) 987-6543",
+      website: "www.techvision.com",
     },
     tags: [],
     schedule: editData?.schedule || {
-      date: '2025-11-28',
-      time: '12:00',
-      timezone: 'US/Eastern'
+      date: "2025-11-28",
+      time: "12:00",
+      timezone: "US/Eastern",
     },
     attachment: undefined,
     logo: undefined,
@@ -66,55 +70,95 @@ const NewRelease: React.FC = () => {
   }, [editData]);
 
   const updateFormData = (updates: Partial<ReleaseFormData>) => {
-    setFormData(prev => ({ ...prev, ...updates }));
+    setFormData((prev) => ({ ...prev, ...updates }));
   };
 
-  const nextStep = () => setCurrentStep(prev => Math.min(prev + 1, 6));
-  const prevStep = () => setCurrentStep(prev => Math.max(prev - 1, 1));
+  const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, 6));
+  const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 1));
   const goToStep = (stepId: number) => {
     setCurrentStep(stepId);
   };
 
+  const getStepColor = () => {
+    return theme === "cs" ? "text-wire-accent" : "text-primary";
+  };
+
+  const getStepBg = () => {
+    return theme === "cs"
+      ? colorMode === "dark"
+        ? "bg-wire-accent"
+        : "bg-wire-accent"
+      : colorMode === "dark"
+      ? "bg-primary-dark"
+      : "bg-primary";
+  };
+
   return (
     <>
-      <div className="fixed top-[64px] left-0 lg:left-64 right-0 bg-white border-b border-secondary-light z-40">
+      <div
+        className={`fixed top-[64px] left-0 lg:left-64 right-0 z-40 border-b shadow-sm ${classes.bg.card} ${classes.border.default}`}
+      >
         <div className="max-w-6xl mx-auto px-2 sm:px-4 lg:px-8">
-          <div className="flex items-center justify-start sm:justify-center gap-1 sm:gap-2 py-2 sm:py-3 overflow-x-auto scrollbar-hide">
+          <div className="flex items-center justify-start sm:justify-center gap-1 sm:gap-2 py-2.5 sm:py-3 overflow-x-auto scrollbar-hide overscroll-x-contain">
             {STEPS.map((step, index) => {
               const active = step.id === currentStep;
               const completed = step.id < currentStep;
-              
+              const stepColor = getStepColor();
+
               return (
                 <React.Fragment key={step.id}>
                   <button
                     onClick={() => goToStep(step.id)}
-                    className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1.5 rounded transition-colors whitespace-nowrap flex-shrink-0 ${
-                      active 
-                        ? 'text-primary font-medium' 
-                        : completed 
-                        ? 'text-primary hover:text-primary/80' 
-                        : 'text-secondary-medium hover:text-secondary-dark'
+                    className={`flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg transition-all duration-200 whitespace-nowrap flex-shrink-0 select-none ${
+                      active
+                        ? `${stepColor} font-semibold ${classes.bg.secondary} shadow-sm`
+                        : completed
+                        ? `${stepColor} hover:opacity-80`
+                        : `${classes.text.secondary}`
+                    } ${
+                      theme === 'cs'
+                        ? colorMode === 'dark'
+                          ? 'hover:bg-wire-bg-light'
+                          : 'hover:bg-wire-bg-light-mode'
+                        : colorMode === 'dark'
+                          ? 'hover:bg-gray-700'
+                          : 'hover:bg-secondary-light'
                     }`}
                     title={`${step.id}. ${step.label}`}
                     aria-label={`Step ${step.id}: ${step.label}`}
                   >
                     {completed ? (
-                      <CheckCircle size={14} className="sm:w-4 sm:h-4 text-primary flex-shrink-0" />
+                      <CheckCircle
+                        size={16}
+                        className={`sm:w-5 sm:h-5 flex-shrink-0 ${stepColor}`}
+                      />
                     ) : (
-                      <div className={`flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center text-xs font-medium ${
-                        active 
-                          ? 'bg-primary text-white' 
-                          : 'bg-secondary-light text-secondary-medium'
-                      }`}>
+                      <div
+                        className={`flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center text-xs sm:text-sm font-semibold transition-all ${
+                          active
+                            ? `${getStepBg()} text-white shadow-md scale-110`
+                            : `${classes.bg.secondary} ${classes.text.secondary}`
+                        }`}
+                      >
                         {step.id}
                       </div>
                     )}
-                    <span className={`text-xs sm:text-sm ${completed ? 'text-primary' : ''}`}>{step.label}</span>
+                    <span
+                      className={`text-xs sm:text-sm font-medium ${
+                        completed ? stepColor : active ? stepColor : ""
+                      }`}
+                    >
+                      {step.label}
+                    </span>
                   </button>
                   {index < STEPS.length - 1 && (
-                    <div className={`h-4 w-px flex-shrink-0 ${
-                      completed ? 'bg-secondary-dark' : 'bg-secondary-light'
-                    }`} />
+                    <div
+                      className={`h-5 w-px flex-shrink-0 mx-0.5 ${
+                        completed || active
+                          ? `${stepColor} opacity-30`
+                          : classes.border.default
+                      }`}
+                    />
                   )}
                 </React.Fragment>
               );
@@ -123,35 +167,35 @@ const NewRelease: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 lg:pt-24">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 lg:pt-28 pb-8 sm:pb-12">
         {currentStep === 1 && (
-          <DistributionStep 
-            selectedCircuit={formData.circuitId} 
+          <DistributionStep
+            selectedCircuit={formData.circuitId}
             onSelect={(id) => updateFormData({ circuitId: id })}
             onNext={nextStep}
           />
         )}
-        
+
         {currentStep === 2 && (
-          <ContentStep 
-            data={formData} 
-            onChange={updateFormData} 
+          <ContentStep
+            data={formData}
+            onChange={updateFormData}
             onNext={nextStep}
             onBack={prevStep}
           />
         )}
 
         {currentStep === 3 && (
-          <OptimizationStep 
-             data={formData}
-             onChange={updateFormData}
-             onNext={nextStep}
-             onBack={prevStep}
+          <OptimizationStep
+            data={formData}
+            onChange={updateFormData}
+            onNext={nextStep}
+            onBack={prevStep}
           />
         )}
 
         {currentStep === 4 && (
-          <ScheduleStep 
+          <ScheduleStep
             data={formData}
             onChange={updateFormData}
             onNext={nextStep}
@@ -160,18 +204,11 @@ const NewRelease: React.FC = () => {
         )}
 
         {currentStep === 5 && (
-           <ReviewStep 
-             data={formData}
-             onNext={nextStep}
-             onBack={prevStep}
-           />
+          <ReviewStep data={formData} onNext={nextStep} onBack={prevStep} />
         )}
 
         {currentStep === 6 && (
-           <CheckoutStep 
-             data={formData}
-             onBack={prevStep}
-           />
+          <CheckoutStep data={formData} onBack={prevStep} />
         )}
       </div>
     </>
