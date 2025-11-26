@@ -38,21 +38,17 @@ const AppContent: React.FC = () => {
 
     if (theme === "cs") {
       if (faviconLink) {
-        faviconLink.href = `${import.meta.env.BASE_URL}logos/${encodeURIComponent('CS Favicon.svg')}`;
+        faviconLink.href = `${import.meta.env.BASE_URL}logos/CSFavicon.svg`;
       }
       if (alternateFaviconLink) {
-        alternateFaviconLink.href = `${
-          import.meta.env.BASE_URL
-        }logos/${encodeURIComponent('CS Favicon.png')}`;
+        alternateFaviconLink.href = `${import.meta.env.BASE_URL}logos/CSFavicon.png`;
       }
     } else {
       if (faviconLink) {
-        faviconLink.href = `${import.meta.env.BASE_URL}logos/${encodeURIComponent('Favicon 2.svg')}`;
+        faviconLink.href = `${import.meta.env.BASE_URL}logos/Favicon2.svg`;
       }
       if (alternateFaviconLink) {
-        alternateFaviconLink.href = `${
-          import.meta.env.BASE_URL
-        }logos/${encodeURIComponent('Favicon 2.png')}`;
+        alternateFaviconLink.href = `${import.meta.env.BASE_URL}logos/Favicon2.png`;
       }
     }
   }, [theme]);
