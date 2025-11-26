@@ -1,6 +1,16 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/blockchainwire",
+      "destination": "/blockchainwire/index.html"
+    },
+    {
+      "source": "/blockchainwire/",
+      "destination": "/blockchainwire/index.html"
+    }
+  ],
   "headers": [
     {
       "source": "/blockchainwire/(.*)",
@@ -28,6 +38,32 @@
       ]
     },
     {
+      "source": "/blockchainwire/assets/(.*\\.css)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/css; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/blockchainwire/assets/(.*\\.js)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/javascript; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
       "source": "/blockchainwire/assets/(.*)",
       "headers": [
         {
@@ -37,8 +73,47 @@
       ]
     },
     {
+      "source": "/blockchainwire/logos/(.*\\.svg)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "image/svg+xml"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/blockchainwire/logos/(.*\\.png)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "image/png"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
       "source": "/blockchainwire/logos/(.*)",
       "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/blockchainwire/cards/(.*\\.svg)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "image/svg+xml"
+        },
         {
           "key": "Cache-Control",
           "value": "public, max-age=31536000, immutable"
