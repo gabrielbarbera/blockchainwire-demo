@@ -199,6 +199,66 @@ The optimized build will be output to the `dist/` directory. To preview the prod
 npm run preview
 ```
 
+## Deployment
+
+### Vercel Deployment
+
+This application is optimized for deployment on Vercel. The project includes:
+
+- **Optimized Configuration**: `vercel.json` with security headers, caching, and compression
+- **HashRouter**: Uses hash-based routing for seamless SPA deployment
+- **Base Path**: Configured for `/blockchainwire/` subdirectory deployment
+- **Node.js Version**: Specified in `.nvmrc` (18.20.0) and `package.json` engines
+
+#### Quick Deploy to Vercel
+
+1. **Connect Repository**:
+   - Import your Git repository to Vercel
+   - Vercel will auto-detect the Vite configuration
+
+2. **Configure Project Settings**:
+   - **Framework Preset**: Vite
+   - **Build Command**: `npm run build` (auto-detected)
+   - **Output Directory**: `dist` (auto-detected)
+   - **Install Command**: `npm install` (auto-detected)
+   - **Node.js Version**: 18.20.0 (from `.nvmrc`)
+
+3. **Deploy**:
+   - Click "Deploy" - Vercel will build and deploy automatically
+   - The application will be available at your Vercel domain
+
+#### Deployment Features
+
+- **Security Headers**: XSS protection, frame options, content type options
+- **Caching**: Static assets cached for 1 year, HTML always fresh
+- **Compression**: Automatic gzip/brotli compression enabled
+- **Performance**: Optimized build output with asset hashing
+
+#### Environment Variables
+
+Currently, no environment variables are required. The application uses:
+- `import.meta.env.BASE_URL` - Automatically set by Vite based on `base` config
+- Mock data for demonstration purposes
+
+If you need to add environment variables in the future:
+1. Add them in Vercel project settings
+2. Prefix with `VITE_` for Vite to expose them (e.g., `VITE_API_URL`)
+3. Access via `import.meta.env.VITE_API_URL`
+
+#### Custom Domain
+
+To deploy to a custom domain:
+1. Add your domain in Vercel project settings
+2. Update `base` in `vite.config.ts` if needed (currently `/blockchainwire/`)
+3. Redeploy
+
+#### Troubleshooting
+
+- **Build Fails**: Check Node.js version matches `.nvmrc` (18.20.0)
+- **Routes Not Working**: Verify HashRouter is used (already configured)
+- **Assets Not Loading**: Check `base` path matches deployment path
+- **404 Errors**: Ensure `outputDirectory` is set to `dist` in `vercel.json`
+
 ## Configuration
 
 ### Tailwind CSS
