@@ -3,7 +3,7 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
-      "source": "/blockchainwire/(?!assets|logos|cards)(.*)",
+      "source": "/blockchainwire/((?!.*\\.).*)$",
       "destination": "/blockchainwire/index.html"
     }
   ]
