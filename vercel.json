@@ -3,10 +3,6 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
-      "source": "/blockchainwire/(.*\\.(js|css|svg|png|jpg|jpeg|gif|ico|woff|woff2|ttf|eot))",
-      "destination": "/blockchainwire/$1"
-    },
-    {
       "source": "/blockchainwire/(.*)",
       "destination": "/blockchainwire/index.html"
     }
