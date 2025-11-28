@@ -4,7 +4,7 @@ import { Button } from '../../../components/ui/Button';
 import { Card } from '../../../components/ui/Card';
 import { useThemeClasses } from '../../../hooks/useThemeClasses';
 import { useTheme } from '../../../contexts/ThemeContext';
-import { X } from 'lucide-react';
+import { X, ArrowRight } from 'lucide-react';
 
 interface Props {
   data: ReleaseFormData;
@@ -114,6 +114,20 @@ const OptimizationStep: React.FC<Props> = ({ data, onChange, onNext, onBack }) =
         </div>
       </div>
 
+      {/* Navigation Buttons */}
+      <div className={`flex justify-between mt-8 pt-6 border-t ${classes.border.default}`}>
+        <Button variant="outline" onClick={onBack} size="lg">
+          Previous
+        </Button>
+        <Button 
+          onClick={onNext}
+          size="lg"
+          className="flex items-center gap-2"
+        >
+          Next
+          <ArrowRight size={20} />
+        </Button>
+      </div>
     </Card>
   );
 };

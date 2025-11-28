@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronRight, X, Scale } from 'lucide-react';
+import { ChevronDown, ChevronRight, X, Scale, ArrowRight } from 'lucide-react';
 import { CIRCUITS } from '../../../constants';
 import { Button } from '../../../components/ui/Button';
 import { useTheme } from '../../../contexts/ThemeContext';
@@ -120,6 +120,7 @@ const DistributionStep: React.FC<Props> = ({ selectedCircuit, onSelect, onNext }
           <Button
             onClick={() => setShowComparison(true)}
             variant="outline"
+            disabled={compareCircuits.size < 2}
             className="flex items-center gap-2"
           >
             <Scale size={16} />
@@ -222,6 +223,14 @@ const DistributionStep: React.FC<Props> = ({ selectedCircuit, onSelect, onNext }
                           size="sm" 
                           variant={isSelected ? 'primary' : 'outline'}
                           className={isSelected ? '' : 'text-secondary-medium border-secondary-light'}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onSelect(circuit.id);
+                            // Auto-fill checkbox when select button is pressed
+                            if (!compareCircuits.has(circuit.id) && compareCircuits.size < 4) {
+                              setCompareCircuits(prev => new Set(prev).add(circuit.id));
+                            }
+                          }}
                         >
                           {isSelected ? 'Selected' : 'Select'}
                         </Button>
@@ -415,6 +424,7 @@ const DistributionStep: React.FC<Props> = ({ selectedCircuit, onSelect, onNext }
               <Button
                 size="sm"
                 onClick={() => setShowComparison(true)}
+                disabled={compareCircuits.size < 2}
                 className="flex-1 sm:flex-none text-xs sm:text-sm"
               >
                 Compare
@@ -423,6 +433,19 @@ const DistributionStep: React.FC<Props> = ({ selectedCircuit, onSelect, onNext }
           </div>
         </div>
       )}
+
+      {/* Next Button */}
+      <div className={`flex justify-end mt-8 pt-6 border-t ${classes.border.default}`}>
+        <Button 
+          onClick={onNext}
+          disabled={!selectedCircuit}
+          size="lg"
+          className="flex items-center gap-2"
+        >
+          Next
+          <ArrowRight size={20} />
+        </Button>
+      </div>
     </div>
   );
 };
